@@ -91,6 +91,48 @@ paths:
               'application/json':
                 schema:
                     $ref: '#/components/schemas/Score'
+
+  /badge:
+    post:
+      description: Register a new badge for a specific API
+      operationId: createBadge
+      security:
+        - ApiKeyAuth: []
+      requestBody:
+        content:
+          'application/json':
+            schema:
+              $ref: '#/components/schemas/Badge'
+      responses:
+        '201':
+          description: badge created
+
+  /badge/{id}:
+    get:
+      description: get the badge corresponding to the id for a specific API
+      operationId: getBadge
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      security:
+        - ApiKeyAuth: []
+      requestBody:
+        content:
+          'application/json':
+             schema:
+               $ref: '#/components/schemas/Badge'
+      responses:
+        '200':
+          description: badge successfully provided
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/Badge'
+
+
 components:
   securitySchemes:
     # bearerAuth:            # arbitrary name for the security scheme
@@ -109,6 +151,11 @@ components:
         name:
           type: string
     ScoreScale:
+      type: object
+      properties:
+        name:
+          type: string
+    Badge:
       type: object
       properties:
         name:

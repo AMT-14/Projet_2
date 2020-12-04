@@ -61,37 +61,23 @@ paths:
             'application/json':
               schema:
                type: UUID
-
-  /score:
+  /events:
     post:
-      description: create score
-      operationId: createScore
+      description: register a new event
+      operationId: registerEvent
       requestBody:
         content:
-          'application/json':
-            schema:
-              $ref: '#/components/schemas/Score'
-      responses:
-        '201':
-          description: updated
-  /score/{id}:
-    get:
-      description: get the score
-      operationId: getScore
-      parameters:
-        - in: path
-          name: id
-          schema:
-            type: integer
-          required: true
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/Event'
       responses:
         '200':
-            description: success
-            content:
-              'application/json':
-                schema:
-                    $ref: '#/components/schemas/Score'
-
+          description: Event registered successfully
+          content:
+            'application/json':
+              schema:
+                type: string
+                
   /badge:
     post:
       description: Register a new badge for a specific API
@@ -165,3 +151,13 @@ components:
       properties:
         value:
           type: Integer
+    Event:
+      type: object
+      properties:
+        name:
+          type: string
+        time:
+          type: string
+          format: date-time
+        userID:
+          type: string

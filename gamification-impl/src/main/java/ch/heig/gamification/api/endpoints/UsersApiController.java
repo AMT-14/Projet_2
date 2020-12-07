@@ -35,7 +35,7 @@ public class UsersApiController implements UsersApi {
         String apiKey = req.getHeader("X-API-KEY");
         List<User> users = new ArrayList<>();
         for(UserEntity userEntity : userRepository.findAllByApiKey(UUID.fromString(apiKey))){
-            users.add(toUser(userEntity)); // transforme userEntity -> User
+         //   users.add(toUser(userEntity)); // transforme userEntity -> User
         }
         return ResponseEntity.ok(users);
     }

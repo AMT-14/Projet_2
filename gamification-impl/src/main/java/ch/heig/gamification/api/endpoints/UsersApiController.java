@@ -1,7 +1,7 @@
 package ch.heig.gamification.api.endpoints;
 
 import ch.heig.gamification.api.model.User;
-import ch.heig.gamification.api.model.Badge;
+// import ch.heig.gamification.api.model.Badge;
 import ch.heig.gamification.api.UsersApi;
 import ch.heig.gamification.entities.ApplicationEntity;
 import ch.heig.gamification.entities.UserEntity;
@@ -47,9 +47,9 @@ public class UsersApiController implements UsersApi {
         String apiKey = req.getHeader("X-API-KEY");
         UserEntity userEntity = userRepository.findByIdAndApiKey(Long.valueOf(id), UUID.fromString(apiKey));
         if(userEntity != null){
-            return ResponseEntity.ok(toUser(userEntity));
+   //         return ResponseEntity.ok(toUser(userEntity));
         } else {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+    //        throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
     }
 /*

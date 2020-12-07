@@ -42,11 +42,11 @@ public class ScoreScalesApiController implements ScoreScalesApi {
 
         return ResponseEntity.created(location).build();
     }
-    /*
+
     public ResponseEntity<ScoreScale> getScoreScale(@ApiParam(name = "", required=true) @PathVariable("id") Integer id) {
         ScoreScaleEntity existingScoreScaleEntity = scoreScaleRepository.findById(Long.valueOf(id)).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
         return ResponseEntity.ok(toScoreScale(existingScoreScaleEntity));
-    }*/
+    }
 
     private ScoreScaleEntity toScoreScaleEntity(ScoreScale scoreScale) {
         ScoreScaleEntity entity = new ScoreScaleEntity();
@@ -54,11 +54,10 @@ public class ScoreScalesApiController implements ScoreScalesApi {
         entity.setApplicationEntity((ApplicationEntity)servletRequest.getAttribute("appEntity"));
         return entity;
     }
-    /*
+
     private ScoreScale toScoreScale(ScoreScaleEntity entity) {
         ScoreScale scoreScale = new ScoreScale();
         scoreScale.setName(entity.getName());
-        //scoreScale.setApplicationEntity(entity.getApplicationEntity());
         return scoreScale;
-    }*/
+    }
 }

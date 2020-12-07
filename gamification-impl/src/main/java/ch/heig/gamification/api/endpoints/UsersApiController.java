@@ -1,10 +1,11 @@
 package ch.heig.gamification.api.endpoints;
 
 import ch.heig.gamification.api.model.User;
-// import ch.heig.gamification.api.model.Badge;
+import ch.heig.gamification.api.model.Badge;
 import ch.heig.gamification.api.UsersApi;
 import ch.heig.gamification.entities.ApplicationEntity;
 import ch.heig.gamification.entities.UserEntity;
+import ch.heig.gamification.entities.BadgeEntity;
 import ch.heig.gamification.repositories.UserRepository;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,10 +32,8 @@ public class UsersApiController implements UsersApi {
     public ResponseEntity<List<User>> getUsers() {
         HttpServletRequest req = (HttpServletRequest) request;
         ApplicationEntity applicationEntity = (ApplicationEntity) req.getAttribute("appEntity");
-
-        String apiKey = req.getHeader("X-API-KEY");
         List<User> users = new ArrayList<>();
-        for(UserEntity userEntity : userRepository.findAllByApiKey(UUID.fromString(apiKey))){
+        for(UserEntity userEntity : userRepository.findAllByAppEntity(applicationEntity)){
             users.add(toUser(userEntity)); // transforme userEntity -> User
         }
         return ResponseEntity.ok(users);
@@ -44,8 +43,7 @@ public class UsersApiController implements UsersApi {
     public ResponseEntity<User> getUser(@ApiParam(value = "", required = true) @PathVariable("id") String id){
         HttpServletRequest req = (HttpServletRequest) request;
         ApplicationEntity applicationEntity = (ApplicationEntity) req.getAttribute("appEntity");
-        String apiKey = req.getHeader("X-API-KEY");
-        UserEntity userEntity = userRepository.findByIdAndApiKey(Long.valueOf(id), UUID.fromString(apiKey));
+        UserEntity userEntity = userRepository.findByIdAndAppEntity(Long.valueOf(id), applicationEntity);
        if(userEntity != null){
            return null;//ResponseEntity.ok(toUser(userEntity));
        } else {

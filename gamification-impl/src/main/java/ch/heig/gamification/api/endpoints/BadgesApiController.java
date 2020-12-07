@@ -21,7 +21,7 @@ import javax.validation.Valid;
 import java.net.URI;
 
 @Controller
-public class BadgeApiController implements BadgeApi {
+public class BadgesApiController implements BadgeApi {
 
     @Autowired
     BadgeRepository badgeRepository;
@@ -50,10 +50,10 @@ public class BadgeApiController implements BadgeApi {
         return entity;
     }
 
-    private BadgeEntity toBadge(BadgeEntity badgeEntity) {
+    private Badge toBadge(BadgeEntity badgeEntity) {
         Badge badge = new Badge();
         badge.setName(badgeEntity.getName());
-        badge.setApplicationEntity((ApplicationEntity)servletRequest.getAttribute("appEntity"));
+        //badge.setApplicationEntity((ApplicationEntity)servletRequest.getAttribute("appEntity"));
         return badge;
     }
 

@@ -47,7 +47,7 @@ public class UsersApiController implements UsersApi {
         String apiKey = req.getHeader("X-API-KEY");
         UserEntity userEntity = userRepository.findByIdAndApiKey(Long.valueOf(id), UUID.fromString(apiKey));
        //if(userEntity != null){
-           return ResponseEntity.ok(toUser(userEntity));
+           return null;//ResponseEntity.ok(toUser(userEntity));
        // } else {
        //    throw new ResponseStatusException(HttpStatus.NOT_FOUND);
       //  }

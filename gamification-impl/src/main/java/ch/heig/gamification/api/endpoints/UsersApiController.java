@@ -46,11 +46,11 @@ public class UsersApiController implements UsersApi {
         ApplicationEntity applicationEntity = (ApplicationEntity) req.getAttribute("appEntity");
         String apiKey = req.getHeader("X-API-KEY");
         UserEntity userEntity = userRepository.findByIdAndApiKey(Long.valueOf(id), UUID.fromString(apiKey));
-        if(userEntity != null){
-   //         return ResponseEntity.ok(toUser(userEntity));
-        } else {
-    //        throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        }
+       //if(userEntity != null){
+           return ResponseEntity.ok(toUser(userEntity));
+       // } else {
+       //    throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+      //  }
     }
 /*
     private Badge toBadge(BadgeEntity badgeEntity){

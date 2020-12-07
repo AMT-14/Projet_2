@@ -2,10 +2,13 @@ package ch.heig.gamification.api.util;
 
 import ch.heig.gamification.entities.ApplicationEntity;
 import ch.heig.gamification.repositories.ApplicationRepository;
+import org.aspectj.lang.annotation.Before;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
+import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
 import java.io.IOException;
 import java.util.UUID;
@@ -20,7 +23,6 @@ public class ApiAuthFilter implements Filter {
     @Autowired
     ApplicationRepository applicationRepository;
 
-
     @Override
     public void doFilter(ServletRequest request, ServletResponse response,
                          FilterChain chain) throws IOException, ServletException {
@@ -31,9 +33,6 @@ public class ApiAuthFilter implements Filter {
         //Fetch API-Key
         String apiKey = req.getHeader("X-API-KEY");
         boolean errorFlag = false;
-
-        System.out.println(apiKey);
-
 
         if(apiKey != null) {
             ApplicationEntity appEntity = applicationRepository.findByApiKey(UUID.fromString(apiKey));
@@ -62,7 +61,7 @@ public class ApiAuthFilter implements Filter {
     @Bean
     public FilterRegistrationBean<ApiAuthFilter> urlFilter() {
         FilterRegistrationBean<ApiAuthFilter> registrationBean = new FilterRegistrationBean<>();
-        registrationBean.setFilter(new ApiAuthFilter());
+        registrationBean.setFilter(this);
         registrationBean.addUrlPatterns("/scoreScales/*"); // badge ?
         return registrationBean;
     }

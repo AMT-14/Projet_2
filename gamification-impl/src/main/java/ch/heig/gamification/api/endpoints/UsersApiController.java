@@ -52,7 +52,7 @@ public class UsersApiController implements UsersApi {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
     }
-
+/*
     private Badge toBadge(BadgeEntity badgeEntity){
         Badge badge = new Badge();
         badge.setName(badgeEntity.getName());
@@ -68,7 +68,7 @@ public class UsersApiController implements UsersApi {
         user.setBadges(badges);
         return user;
     }
-
+*/
 
 
 }

@@ -35,7 +35,7 @@ public class UsersApiController implements UsersApi {
         String apiKey = req.getHeader("X-API-KEY");
         List<User> users = new ArrayList<>();
         for(UserEntity userEntity : userRepository.findAllByApiKey(UUID.fromString(apiKey))){
-         //   users.add(toUser(userEntity)); // transforme userEntity -> User
+            users.add(toUser(userEntity)); // transforme userEntity -> User
         }
         return ResponseEntity.ok(users);
     }
@@ -46,13 +46,13 @@ public class UsersApiController implements UsersApi {
         ApplicationEntity applicationEntity = (ApplicationEntity) req.getAttribute("appEntity");
         String apiKey = req.getHeader("X-API-KEY");
         UserEntity userEntity = userRepository.findByIdAndApiKey(Long.valueOf(id), UUID.fromString(apiKey));
-       //if(userEntity != null){
+       if(userEntity != null){
            return null;//ResponseEntity.ok(toUser(userEntity));
-       // } else {
-       //    throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-      //  }
+       } else {
+          throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
     }
-/*
+
     private Badge toBadge(BadgeEntity badgeEntity){
         Badge badge = new Badge();
         badge.setName(badgeEntity.getName());
@@ -68,7 +68,7 @@ public class UsersApiController implements UsersApi {
         user.setBadges(badges);
         return user;
     }
-*/
+
 
 
 }

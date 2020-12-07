@@ -50,4 +50,11 @@ public class BadgeApiController implements BadgeApi {
         return entity;
     }
 
+    private BadgeEntity toBadge(BadgeEntity badgeEntity) {
+        Badge badge = new Badge();
+        badge.setName(badgeEntity.getName());
+        badge.setApplicationEntity((ApplicationEntity)servletRequest.getAttribute("appEntity"));
+        return badge;
+    }
+
 }

@@ -139,7 +139,7 @@ components:
           type: string
         scoreScaleId:
           type: integer
-        scoreToAdd:
+        scoreDelta:
           type: integer
 
 

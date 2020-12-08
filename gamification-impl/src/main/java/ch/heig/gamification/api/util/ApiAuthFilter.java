@@ -34,9 +34,6 @@ public class ApiAuthFilter implements Filter {
         String apiKey = req.getHeader("X-API-KEY");
         boolean errorFlag = false;
 
-        System.out.println(apiKey);
-
-
         if(apiKey != null) {
             ApplicationEntity appEntity = applicationRepository.findByApiKey(UUID.fromString(apiKey));
             if (appEntity != null) {

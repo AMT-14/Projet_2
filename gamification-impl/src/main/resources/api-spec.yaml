@@ -61,6 +61,25 @@ paths:
             'application/json':
               schema:
                type: UUID
+
+  /rules:
+    post:
+      description: create a new rule
+      operationId: createRule
+      requestBody:
+        content:
+          'application/json':
+            schema:
+              $ref: '#/components/schemas/Rule'
+      responses:
+        '200':
+          description: new rule creation success
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/Rule'
+
+
   /events:
     post:
       description: register a new event
@@ -168,6 +187,22 @@ components:
       properties:
         name:
           type: string
+    Rule:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        event:
+          type: string
+        badgeName:
+          type: string
+        scoreScaleId:
+          type: string
+        scoreDelta:
+          type: integer
+
     ScoreScale:
       type: object
       properties:

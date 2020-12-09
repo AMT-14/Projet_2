@@ -48,9 +48,13 @@ public class RulesApiController implements RulesApi{
         // TODO: check here if rule is wrong (check its attributes)
         // in this case return ResponseEntity.status(HttpStatus.BAD_REQUEST).build(); // or NOT_found
 
-        Optional<ScoreScaleEntity> scoreScaleEntity = scoreScaleRepository.findById(Long.valueOf(rule.getScoreScaleId()));
+        long ssid = Long.parseLong(rule.getScoreScaleId());
+        if(ssid == 0){
+            ssid = Long.MAX_VALUE;
+        }
+        ScoreScaleEntity scoreScaleEntity = scoreScaleRepository.findById(ssid);
         BadgeEntity badgeEntity = badgeRepository.findByName(rule.getBadgeName());
-        if (scoreScaleEntity.isEmpty() || badgeEntity == null){
+        if (scoreScaleEntity == null || badgeEntity == null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
 
@@ -70,8 +74,9 @@ public class RulesApiController implements RulesApi{
         ruleEntity.setName(rule.getName());
         ruleEntity.setDescription(rule.getDescription());
         ruleEntity.setEvent(rule.getEvent());
-        (rule.getBadgeName() != null) ? ruleEntity.setBadgeName(rule.getBadgeName()) : ruleEntity.setBadgeName("");
-        ruleEntity.setscoreDelta(rule.getScoreDelta());
+        if(rule.getBadgeName() != null && rule.getBadgeName() != "") { ruleEntity.setBadgeName(rule.getBadgeName());}
+        else { ruleEntity.setBadgeName("");}
+        ruleEntity.setScoreDelta(rule.getScoreDelta());
         return ruleEntity;
     }
 }

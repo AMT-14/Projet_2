@@ -16,7 +16,7 @@ public class RuleEntity {
     private String description;
     private String event;
     private String badgeName;
-    private Long scoreScaleId;
+    private String scoreScaleId;
     private int scoreDelta;
 
     @ManyToOne

@@ -1,10 +1,14 @@
 package ch.heig.gamification.api.endpoints;
 
 import ch.heig.gamification.api.model.ScoreScale;
+import ch.heig.gamification.api.model.Rule;
+import ch.heig.gamification.api.RulesApi;
 import ch.heig.gamification.entities.ApplicationEntity;
+import ch.heig.gamification.entities.BadgeEntity;
 import ch.heig.gamification.entities.RuleEntity;
 import ch.heig.gamification.entities.ScoreScaleEntity;
 import ch.heig.gamification.repositories.ApplicationRepository;
+import ch.heig.gamification.repositories.BadgeRepository;
 import ch.heig.gamification.repositories.RuleRepository;
 import ch.heig.gamification.repositories.ScoreScaleRepository;
 import io.swagger.annotations.ApiParam;
@@ -19,6 +23,7 @@ import javax.servlet.ServletRequest;
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.http.HttpRequest;
+import java.util.Optional;
 
 public class RulesApiController implements RulesApi{
 
@@ -30,8 +35,8 @@ public class RulesApiController implements RulesApi{
     ApplicationRepository applicationRepository;
     @Autowired
     ScoreScaleRepository scoreScaleRepository;
-    //@Autowired
-   // BadgeRepository badgeRepository;
+    @Autowired
+    BadgeRepository badgeRepository;
     @Autowired
     RuleRepository ruleRepository;
 
@@ -43,9 +48,9 @@ public class RulesApiController implements RulesApi{
         // TODO: check here if rule is wrong (check its attributes)
         // in this case return ResponseEntity.status(HttpStatus.BAD_REQUEST).build(); // or NOT_found
 
-        ScoreScaleEntity scoreScaleEntity = scoreScaleRepository.findById(rule.getScoreScaleId());
+        Optional<ScoreScaleEntity> scoreScaleEntity = scoreScaleRepository.findById(Long.valueOf(rule.getScoreScaleId()));
         BadgeEntity badgeEntity = badgeRepository.findByName(rule.getBadgeName());
-        if (scoreScaleEntity == null || badgeEntity == null){
+        if (scoreScaleEntity.isEmpty() || badgeEntity == null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
 
@@ -65,7 +70,7 @@ public class RulesApiController implements RulesApi{
         ruleEntity.setName(rule.getName());
         ruleEntity.setDescription(rule.getDescription());
         ruleEntity.setEvent(rule.getEvent());
-        (rule.getBadgeName() != null) ? ruleEntity.setBadgeName(rule.getBadgeName) : ruleEntity.setBadgeName("");
+        (rule.getBadgeName() != null) ? ruleEntity.setBadgeName(rule.getBadgeName()) : ruleEntity.setBadgeName("");
         ruleEntity.setscoreDelta(rule.getScoreDelta());
         return ruleEntity;
     }

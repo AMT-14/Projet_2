@@ -43,7 +43,7 @@ public class UsersApiController implements UsersApi {
     public ResponseEntity<User> getUser(@ApiParam(value = "", required = true) @PathVariable("id") String id){
         HttpServletRequest req = (HttpServletRequest) request;
         ApplicationEntity applicationEntity = (ApplicationEntity) req.getAttribute("appEntity");
-        UserEntity userEntity = userRepository.findByIdAndAppEntity(Long.valueOf(id), applicationEntity);
+        UserEntity userEntity = userRepository.findById(Long.valueOf(id));
        if(userEntity != null){
            return null;//ResponseEntity.ok(toUser(userEntity));
        } else {

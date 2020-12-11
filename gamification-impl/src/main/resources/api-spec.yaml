@@ -232,7 +232,7 @@ components:
           type: string
         creationDateTime:
           type: Date
-        userID:
+        inGamifiedAppUserID:
           type: string
         properties:
           type: string

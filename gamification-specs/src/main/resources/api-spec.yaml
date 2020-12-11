@@ -230,8 +230,7 @@ components:
       properties:
         name:
           type: string
-        time:
-          type: string
-          format: date-time
+        creationDateTime:
+          type: Date
         userID:
           type: string

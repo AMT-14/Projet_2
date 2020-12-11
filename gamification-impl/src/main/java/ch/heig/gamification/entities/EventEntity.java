@@ -4,7 +4,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.time.OffsetDateTime;
+import java.util.Date;
 
 @Entity
 @Data
@@ -17,8 +17,8 @@ public class EventEntity implements Serializable {
 
     private long userId;
 
-    @Column(columnDefinition = "TIMESTAMP WITH TIME ZONE")
-    private OffsetDateTime time;
+    @Temporal(TemporalType.TIMESTAMP)
+    Date creationDateTime;
 
     @ManyToOne
     private ApplicationEntity applicationEntity;

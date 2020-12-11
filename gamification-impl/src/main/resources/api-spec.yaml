@@ -234,3 +234,5 @@ components:
           type: Date
         userID:
           type: string
+        properties:
+          type: string

@@ -47,6 +47,8 @@ public class EventsApiController implements EventsApi {
         eventEntity.setUserId(Integer.parseInt(event.getUserID()));
         eventEntity.setName(event.getName());
         eventEntity.setCreationDateTime(event.getCreationDateTime());
+        eventEntity.setProperties(event.getProperties());
+
         return eventEntity;
     }
 }

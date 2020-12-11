@@ -17,6 +17,8 @@ public class EventEntity implements Serializable {
 
     private long userId;
 
+    private String properties;
+
     @Temporal(TemporalType.TIMESTAMP)
     Date creationDateTime;
 

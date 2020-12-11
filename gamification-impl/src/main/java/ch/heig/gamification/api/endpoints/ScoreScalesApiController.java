@@ -34,8 +34,6 @@ public class ScoreScalesApiController implements ScoreScalesApi {
         ScoreScaleEntity newScoreScaleEntity = toScoreScaleEntity(scoreScale);
         scoreScaleRepository.save(newScoreScaleEntity);
 
-        servletRequest.getAttribute("scoreScaleEntitiy");
-
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest().path("/{id}")
                 .buildAndExpand(newScoreScaleEntity.getId()).toUri();

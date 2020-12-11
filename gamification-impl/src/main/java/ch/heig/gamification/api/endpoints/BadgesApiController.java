@@ -34,8 +34,6 @@ public class BadgesApiController implements BadgeApi {
         BadgeEntity newBadgeEntity = toBadgeEntity(badge);
         badgeRepository.save(newBadgeEntity);
 
-        servletRequest.getAttribute("badgeEntitiy");
-
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest().path("/{id}")
                 .buildAndExpand(newBadgeEntity.getId()).toUri();

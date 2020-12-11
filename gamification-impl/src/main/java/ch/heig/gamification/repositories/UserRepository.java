@@ -9,6 +9,7 @@ import java.util.UUID;
 
 public interface UserRepository extends CrudRepository<UserEntity, Long> {
 
-    UserEntity findByIdAndAppEntity(long id, ApplicationEntity applicationEntity);
+    UserEntity findById(long id);
+    UserEntity findByInGamifiedAppUserIDAndAppEntity(String inGamifiedAppUserID, ApplicationEntity applicationEntity);
     List<UserEntity> findAllByAppEntity(ApplicationEntity applicationEntity);
 }

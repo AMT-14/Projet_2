@@ -16,7 +16,9 @@ public class UserEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @ManyToOne
+    private String inGamifiedAppUserId;
+
+    @OneToOne
     private ApplicationEntity appEntity;
 
     @OneToMany

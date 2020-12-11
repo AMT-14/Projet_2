@@ -45,6 +45,7 @@ public class ApplicationSteps {
     @When("^I POST it to the /applications endpoint$")
     public void i_POST_it_to_the_applications_endpoint() throws Throwable {
         try {
+            // System.out.println(api.registerApplicationWithHttpInfo(main.getApplication()));
             ApiResponse response = api.registerApplicationWithHttpInfo(main.getApplication());
             env.setApiResponse(response);
             // now process

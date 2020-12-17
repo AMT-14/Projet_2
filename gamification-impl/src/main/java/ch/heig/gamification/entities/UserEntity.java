@@ -18,7 +18,7 @@ public class UserEntity implements Serializable {
 
     private String inGamifiedAppUserId;
 
-    @OneToOne
+    @ManyToOne
     private ApplicationEntity appEntity;
 
     @OneToMany

@@ -92,10 +92,6 @@ paths:
       responses:
         '200':
           description: Event registered successfully
-          content:
-            'application/json':
-              schema:
-                type: string
                 
   /badge:
     post:
@@ -232,7 +228,7 @@ components:
           type: string
         creationDateTime:
           type: Date
-        inGamifiedAppUserID:
+        inGamifiedAppUserId:
           type: string
         properties:
           type: string

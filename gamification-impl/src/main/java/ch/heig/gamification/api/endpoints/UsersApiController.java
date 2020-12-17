@@ -19,6 +19,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Controller
@@ -26,6 +27,7 @@ public class UsersApiController implements UsersApi {
 
     @Autowired
     ServletRequest request;
+
     @Autowired
     UserRepository userRepository;
 
@@ -43,7 +45,8 @@ public class UsersApiController implements UsersApi {
     public ResponseEntity<User> getUser(@ApiParam(value = "", required = true) @PathVariable("id") String id){
         HttpServletRequest req = (HttpServletRequest) request;
         ApplicationEntity applicationEntity = (ApplicationEntity) req.getAttribute("appEntity");
-        UserEntity userEntity = userRepository.findById(Long.valueOf(id));
+        long longId = Long.valueOf(id);
+        UserEntity userEntity = userRepository.findById(longId);
        if(userEntity != null){
            return null;//ResponseEntity.ok(toUser(userEntity));
        } else {

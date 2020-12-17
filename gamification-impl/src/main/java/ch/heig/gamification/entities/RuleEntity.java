@@ -4,10 +4,11 @@ import lombok.Data;
 import lombok.Generated;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Data
-public class RuleEntity {
+public class RuleEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,9 +16,11 @@ public class RuleEntity {
     private String name;
     private String description;
     private String event;
-    private String badgeName;
+    private String badgeName; // voir plus bas
     private String scoreScaleId;
     private int scoreDelta;
+
+    //many to one to badge entity
 
     @ManyToOne
     private ApplicationEntity applicationEntity;

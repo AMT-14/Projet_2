@@ -15,12 +15,13 @@ public class EventEntity implements Serializable {
 
     private String name;
 
+    @ManyToOne
     private UserEntity user;
 
     private String properties;
 
     @Temporal(TemporalType.TIMESTAMP)
-    Date creationDateTime;
+    private Date creationDateTime;
 
     @ManyToOne
     private ApplicationEntity applicationEntity;

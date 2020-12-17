@@ -10,6 +10,10 @@ import java.util.Date;
 @Data
 public abstract class RewardEntity implements Serializable {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+
     @Temporal(TemporalType.TIMESTAMP)
     private Date timeStamp;
 
@@ -19,6 +23,4 @@ public abstract class RewardEntity implements Serializable {
     @ManyToOne
     private UserEntity user;
 
-    @Id
-    private long id;
 }

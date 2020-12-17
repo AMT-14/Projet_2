@@ -62,7 +62,11 @@ public class ApiAuthFilter implements Filter {
     public FilterRegistrationBean<ApiAuthFilter> urlFilter() {
         FilterRegistrationBean<ApiAuthFilter> registrationBean = new FilterRegistrationBean<>();
         registrationBean.setFilter(this);
-        registrationBean.addUrlPatterns("/scoreScales/*"); // badge ?
+        registrationBean.addUrlPatterns("/scoreScales/*");
+        registrationBean.addUrlPatterns("/users/*");
+        registrationBean.addUrlPatterns("/badge/*");
+        registrationBean.addUrlPatterns("/events/*");
+        registrationBean.addUrlPatterns("/rules/*");
         return registrationBean;
     }
 }

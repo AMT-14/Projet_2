@@ -29,17 +29,20 @@ public class EventProcessor {
     @Async
     @Transactional
     public void process(EventEntity event){
+        ScoreScaleEntity scoreScaleEntity = new ScoreScaleEntity();
+        scoreScaleEntity.setApplicationEntity(event.getApplicationEntity());
+        scoreScaleEntity.setName("test_ter");
+        scoreScaleRepository.save(scoreScaleEntity);
+
+
         ScoreRewardEntity rewardEntity = new ScoreRewardEntity();
         rewardEntity.setApplicationEntity(event.getApplicationEntity());
         rewardEntity.setUser(event.getUser());
         rewardEntity.setTimeStamp(event.getCreationDateTime());
         rewardEntity.setDelta(5);
+        rewardEntity.setScoreScaleEntity(scoreScaleEntity);
 
-        ScoreScaleEntity scoreScaleEntity = new ScoreScaleEntity();
-        scoreScaleEntity.setApplicationEntity(event.getApplicationEntity());
-        scoreScaleEntity.setName("test de reward");
 
-        scoreScaleRepository.save(scoreScaleEntity);
         rewardRepository.save(rewardEntity);
 
 

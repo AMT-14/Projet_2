@@ -5,7 +5,6 @@ import ch.heig.gamification.entities.ApplicationEntity;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
-import java.util.UUID;
 
 public interface UserRepository extends CrudRepository<UserEntity, Long> {
     UserEntity findById(long id);

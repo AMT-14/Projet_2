@@ -48,8 +48,6 @@ public class EventProcessor {
                     rewardEntity.setBadgeEntity(rule.getBadgeEntity());
                     rewardRepository.save(rewardEntity);
                 }
-
-
             }
         }
 

@@ -1,7 +1,7 @@
 package ch.heig.gamification.api.endpoints;
 
 import ch.heig.gamification.api.model.User;
-import ch.heig.gamification.api.model.Badge;
+import ch.heig.gamification.api.model.UserStat;
 import ch.heig.gamification.api.UsersApi;
 import ch.heig.gamification.entities.ApplicationEntity;
 import ch.heig.gamification.entities.UserEntity;
@@ -45,26 +45,30 @@ public class UsersApiController implements UsersApi {
     public ResponseEntity<User> getUser(@ApiParam(value = "", required = true) @PathVariable("id") String id){
         HttpServletRequest req = (HttpServletRequest) request;
         ApplicationEntity applicationEntity = (ApplicationEntity) req.getAttribute("appEntity");
-        long longId = Long.valueOf(id);
-        UserEntity userEntity = userRepository.findById(longId);
+        long userId = Long.valueOf(id);
+        UserEntity userEntity = userRepository.findById(userId);
        if(userEntity != null){
+
            return null;//ResponseEntity.ok(toUser(userEntity));
        } else {
           throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
     }
 
-    private Badge toBadge(BadgeEntity badgeEntity){
-        Badge badge = new Badge();
-        badge.setName(badgeEntity.getName());
-        return badge;
-    }
-
     private User toUser(UserEntity userEntity){
         User user = new User();
+        user.setInGamifiedAppUserId(userEntity.getInGamifiedAppUserId());
         return user;
     }
 
+    private UserStat getStat(UserEntity userEntity){
+        UserStat userStat = new UserStat();
+        //TODO faire les requêtes
 
+        // rewardRepository.getBadgesFromUser(userEntity);
+        // rewardRepository.getScoresFromUser(userEntity);
+
+        return userStat;
+    }
 
 }

@@ -163,7 +163,7 @@ paths:
           content:
             'application/json':
               schema:
-                $ref: '#/components/schemas/User'
+                $ref: '#/components/schemas/UserStat'
 
 
 components:
@@ -209,18 +209,11 @@ components:
       properties:
         name:
           type: string
-    Score:
-      type: object
-      properties:
-        value:
-          type: Integer
     User:
       type: object
       properties:
-        badges:
-          type: array
-          items:
-            $ref: '#/components/schema/Badge'
+        inGamifiedAppUserId:
+          type: string
     Event:
       type: object
       properties:
@@ -230,3 +223,24 @@ components:
           type: string
         properties:
           type: string
+    UserScore:
+      type: object
+      properties:
+        scoreName:
+          type: string
+        scoreValue:
+          type: int
+    UserStat:
+      type: object
+      properties:
+        user:
+          type: User
+        scores:
+          type : array
+          items:
+            $ref: '#components/schemas/UserScore'
+        badges:
+          type: array
+          items:
+            $ref: '#components/schemas/Badge'
+

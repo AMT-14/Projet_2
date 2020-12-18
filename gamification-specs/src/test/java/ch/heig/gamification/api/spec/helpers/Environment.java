@@ -63,4 +63,7 @@ public class Environment {
     }
 
 
+    public int getHTTPStatus() {
+        return this.HTTPStatus;
+    }
 }

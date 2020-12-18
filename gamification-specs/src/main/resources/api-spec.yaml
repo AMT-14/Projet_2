@@ -90,12 +90,8 @@ paths:
             schema:
               $ref: '#/components/schemas/Event'
       responses:
-        '200':
+        '201':
           description: Event registered successfully
-          content:
-            'application/json':
-              schema:
-                type: string
 
   /badge:
     post:
@@ -232,5 +228,7 @@ components:
           type: string
         creationDateTime:
           type: Date
-        userID:
+        inGamifiedAppUserId:
+          type: string
+        properties:
           type: string

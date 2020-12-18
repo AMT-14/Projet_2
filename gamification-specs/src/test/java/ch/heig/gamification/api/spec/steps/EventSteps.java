@@ -3,7 +3,6 @@ package ch.heig.gamification.api.spec.steps;
 import ch.heig.gamification.ApiException;
 import ch.heig.gamification.ApiResponse;
 import ch.heig.gamification.api.DefaultApi;
-import ch.heig.gamification.api.dto.Application;
 import ch.heig.gamification.api.dto.Event;
 import ch.heig.gamification.api.spec.helpers.Environment;
 import ch.heig.gamification.api.spec.helpers.GamificationObjects;
@@ -27,7 +26,7 @@ public class EventSteps {
         this.api = env.getApi();
         this.main = main;
         // authenticate API-Key
-        String apiKey = main.getApplication().getApiKey();
+        String apiKey = env.getApiKey(); //api.getApiClient() .getAuthentication("X-API-KEY");// GamificationObjects.getApplication().getApiKey();
         api.getApiClient().setApiKey(apiKey);
     }
 
@@ -35,9 +34,9 @@ public class EventSteps {
     public void i_have_an_event_payload() throws Throwable {
         Event event = new Event()
                 .name("event 2319")
-                .userID("userID")
-                .creationDateTime(Date.from(Instant.now()));
-                // .properties("eventType");
+                .inGamifiedAppUserId("userID")
+                .creationDateTime(Date.from(Instant.now()))
+                .properties("eventType");
 
         main.setEvent(event);
     }
@@ -49,7 +48,6 @@ public class EventSteps {
             env.setApiResponse(response);
             // now process
             env.ApiResponseProcessor(env.getApiResponse());
-            GamificationObjects.setEvent((Event) env.getApiResponse().getData());
         } catch (ApiException ex){
             env.ApiExceptionProcessor(ex);
         }

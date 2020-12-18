@@ -30,6 +30,10 @@ public class Environment {
     @Setter
     ApiException apiException;
 
+    @Getter
+    @Setter
+    String apiKey;
+
 
 
     public Environment() throws IOException {
@@ -56,6 +60,7 @@ public class Environment {
     public void ApiResponseProcessor(ApiResponse r){
         apiResponse = r;
         HTTPStatus = apiResponse.getStatusCode();
+        apiKey = r.getHeaders().get("X-API-KEY").toString();
 
         // exception should be negated in this case
         isException = false;

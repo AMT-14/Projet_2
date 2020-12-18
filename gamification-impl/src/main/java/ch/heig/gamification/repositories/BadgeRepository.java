@@ -8,4 +8,5 @@ import java.util.UUID;
 
 public interface BadgeRepository extends CrudRepository<BadgeEntity, Long> {
     BadgeEntity findByApplicationEntityAndId(ApplicationEntity applicationEntity, long badgeId);
+    BadgeEntity findByApplicationEntityAndName(ApplicationEntity applicationEntity, String name);
 }

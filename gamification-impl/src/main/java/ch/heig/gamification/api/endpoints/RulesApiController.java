@@ -37,6 +37,8 @@ public class RulesApiController implements RulesApi{
     BadgeRepository badgeRepository;
     @Autowired
     RuleRepository ruleRepository;
+    @Autowired
+    ServletRequest servletRequest;
 
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Rule> createRule(@ApiParam(value = "", required = true) @Valid @RequestBody Rule rule) {
@@ -53,21 +55,26 @@ public class RulesApiController implements RulesApi{
         }
         */
 
-        RuleEntity ruleEntity = toRuleEntity(rule);
+        RuleEntity newRuleEntity = toRuleEntity(rule);
+        RuleEntity alreadyThere = ruleRepository.findByApplicationEntityAndName(
+                (ApplicationEntity)servletRequest.getAttribute("appEntity"), rule.getName());
 
-        if (ruleEntity.getScoreScaleEntity() == null && ruleEntity.getScoreScaleEntity() == null){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        if((alreadyThere != null && alreadyThere.getName().equals(newRuleEntity.getName()))
+                || newRuleEntity.getScoreScaleEntity() == null){
+            return ResponseEntity.status(HttpStatus.I_AM_A_TEAPOT).build(); // bien choisir le status de retour
+        } else {
+        /*
+        if (newRuleEntity.getScoreScaleEntity() == null && newRuleEntity.getScoreScaleEntity() == null){
+            return ResponseEntity.status(HttpStatus.I_AM_A_TEAPOT).build();
+        }*/
+
+            ruleRepository.save(newRuleEntity);
+            URI location = ServletUriComponentsBuilder
+                    .fromCurrentRequest().path("/{id}")
+                    .buildAndExpand(newRuleEntity.getId()).toUri();
+
+            return ResponseEntity.created(location).build();
         }
-
-
-
-        ruleRepository.save(ruleEntity);
-        URI location = ServletUriComponentsBuilder
-                .fromCurrentRequest().path("/{id}")
-                .buildAndExpand(ruleEntity.getId()).toUri();
-
-        return ResponseEntity.created(location).build();
-
     }
 
 

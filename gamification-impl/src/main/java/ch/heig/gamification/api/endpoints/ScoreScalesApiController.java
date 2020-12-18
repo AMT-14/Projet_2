@@ -3,6 +3,7 @@ package ch.heig.gamification.api.endpoints;
 import ch.heig.gamification.api.ScoreScalesApi;
 import ch.heig.gamification.api.model.ScoreScale;
 import ch.heig.gamification.entities.ApplicationEntity;
+import ch.heig.gamification.entities.BadgeEntity;
 import ch.heig.gamification.entities.ScoreScaleEntity;
 import ch.heig.gamification.repositories.ScoreScaleRepository;
 import io.swagger.annotations.ApiParam;
@@ -32,13 +33,20 @@ public class ScoreScalesApiController implements ScoreScalesApi {
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Void> createScoreScale(@ApiParam(name = "", required = true) @Valid @RequestBody ScoreScale scoreScale) {
         ScoreScaleEntity newScoreScaleEntity = toScoreScaleEntity(scoreScale);
-        scoreScaleRepository.save(newScoreScaleEntity);
+        ScoreScaleEntity alreadyThere = scoreScaleRepository.findByApplicationEntityAndName(
+                (ApplicationEntity)servletRequest.getAttribute("appEntity"), scoreScale.getName());
 
-        URI location = ServletUriComponentsBuilder
-                .fromCurrentRequest().path("/{id}")
-                .buildAndExpand(newScoreScaleEntity.getId()).toUri();
+        if(alreadyThere != null && alreadyThere.getName().equals(newScoreScaleEntity.getName())){
+            return ResponseEntity.status(HttpStatus.I_AM_A_TEAPOT).build(); // bien choisir le status de retour
+        } else {
+            scoreScaleRepository.save(newScoreScaleEntity);
 
-        return ResponseEntity.created(location).build();
+            URI location = ServletUriComponentsBuilder
+                    .fromCurrentRequest().path("/{id}")
+                    .buildAndExpand(newScoreScaleEntity.getId()).toUri();
+
+            return ResponseEntity.created(location).build();
+        }
     }
 
     public ResponseEntity<ScoreScale> getScoreScale(@ApiParam(name = "", required=true) @PathVariable("id") Integer id) {

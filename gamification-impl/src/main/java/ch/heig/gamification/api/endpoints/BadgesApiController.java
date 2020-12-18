@@ -32,13 +32,21 @@ public class BadgesApiController implements BadgeApi {
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Void> createBadge(@ApiParam(name = "", required = true) @Valid @RequestBody Badge badge) {
         BadgeEntity newBadgeEntity = toBadgeEntity(badge);
-        badgeRepository.save(newBadgeEntity);
+        BadgeEntity alreadyThere = badgeRepository.findByApplicationEntityAndName(
+                (ApplicationEntity)servletRequest.getAttribute("appEntity"), badge.getName());
 
-        URI location = ServletUriComponentsBuilder
-                .fromCurrentRequest().path("/{id}")
-                .buildAndExpand(newBadgeEntity.getId()).toUri();
+        if((alreadyThere != null) && (alreadyThere.getName().equals(newBadgeEntity.getName()))) {
+            return ResponseEntity.status(HttpStatus.I_AM_A_TEAPOT).build(); // bien choisir le status de retour
+        } else {
+            badgeRepository.save(newBadgeEntity);
 
-        return ResponseEntity.created(location).build();
+            URI location = ServletUriComponentsBuilder
+                    .fromCurrentRequest().path("/{id}")
+                    .buildAndExpand(newBadgeEntity.getId()).toUri();
+
+
+            return ResponseEntity.created(location).build();
+        }
     }
 
     private BadgeEntity toBadgeEntity(Badge badge) {

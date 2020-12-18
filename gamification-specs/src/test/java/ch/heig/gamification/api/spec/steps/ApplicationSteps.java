@@ -58,7 +58,7 @@ public class ApplicationSteps {
 
     @Then("^I receive a (\\d+) status code$")
     public void i_receive_a_status_code(int expectedStatusCode) throws Throwable {
-        assertEquals(expectedStatusCode, env.getHTTPStatus());
+        assertEquals(expectedStatusCode, env.getHttpStatus());
     }
 
 //    @When("^I ask for a list of registered applications with a GET on the /registrations endpoint$")

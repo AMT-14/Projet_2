@@ -16,7 +16,7 @@ public class Environment {
 
     @Getter
     @Setter
-    int HTTPStatus;
+    int httpStatus;
 
     @Getter
     @Setter
@@ -51,7 +51,7 @@ public class Environment {
     public void ApiExceptionProcessor(ApiException e){
         isException = true;
         apiException = e;
-        HTTPStatus = e.getCode();
+        httpStatus = e.getCode();
 
         // response should be removed in case of exception
         apiResponse = null;
@@ -59,7 +59,7 @@ public class Environment {
 
     public void ApiResponseProcessor(ApiResponse r){
         apiResponse = r;
-        HTTPStatus = apiResponse.getStatusCode();
+        httpStatus = r.getStatusCode();
         apiKey = r.getHeaders().get("X-API-KEY").toString();
 
         // exception should be negated in this case
@@ -67,8 +67,4 @@ public class Environment {
         apiException = null;
     }
 
-
-    public int getHTTPStatus() {
-        return this.HTTPStatus;
-    }
 }

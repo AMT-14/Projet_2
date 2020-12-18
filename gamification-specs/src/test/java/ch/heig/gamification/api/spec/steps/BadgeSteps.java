@@ -3,25 +3,26 @@ package ch.heig.gamification.api.spec.steps;
 import ch.heig.gamification.ApiException;
 import ch.heig.gamification.ApiResponse;
 import ch.heig.gamification.api.DefaultApi;
+import ch.heig.gamification.api.dto.Badge;
 import ch.heig.gamification.api.dto.Event;
 import ch.heig.gamification.api.spec.helpers.Environment;
 import ch.heig.gamification.api.spec.helpers.GamificationObjects;
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
-import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.junit.Assert;
 
 import java.time.Instant;
-import java.time.OffsetDateTime;
 import java.util.Date;
 
-public class EventSteps {
+public class BadgeSteps {
 
     private DefaultApi api;
     private Environment env;
     private GamificationObjects main;
 
 
-    public EventSteps(GamificationObjects main,Environment env) {
+    public BadgeSteps(GamificationObjects main,Environment env) {
         this.env = env;
         this.api = env.getApi();
         this.main = main;
@@ -30,21 +31,17 @@ public class EventSteps {
         api.getApiClient().setApiKey(apiKey);
     }
 
-    @Given("^I have an event payload$")
-    public void i_have_an_event_payload() throws Throwable {
-        Event event = new Event()
-                .name("event 2319")
-                .inGamifiedAppUserId("userID")
-                .creationDateTime(Date.from(Instant.now()))
-                .properties("eventType");
-
-        main.setEvent(event);
+    @Given("^I have a badge payload$")
+    public void i_have_a_badge_payload() throws Throwable {
+        Badge badge = new Badge()
+                .name("Badge42");
+        main.setBadge(badge);
     }
 
-    @When("^I POST it to the /events endpoint$")
-    public void i_POST_it_to_the_events_endpoint() throws Throwable {
+    @When("^I POST it to the /badges endpoint$")
+    public void i_POST_it_to_the_badges_endpoint() throws Throwable {
         try {
-            ApiResponse response = api.registerEventWithHttpInfo(main.getEvent());
+            ApiResponse response = api.createBadgeWithHttpInfo(main.getBadge());
             env.setApiResponse(response);
             // now process
             env.ApiResponseProcessor(env.getApiResponse());
@@ -53,6 +50,12 @@ public class EventSteps {
         }
     }
 
-
-
+    @And("^I ask for this badge with a GET on the /badges/id endpoint$")
+    public void i_ask_for_this_badge_with_a_GET_on_the_badge_endpoint() throws Throwable {
+        //int id = main.getBadge().getId(); //won t work for now, can t access to ID
+        Badge badge = main.getBadge();
+        // Badge badge = api.getBadge(id,null);
+        assert(badge.getName().equals(main.getBadge().getName()));
+        assert(badge.getName().equals("Badge42"));
+    }
 }

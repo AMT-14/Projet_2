@@ -1,9 +1,7 @@
 package ch.heig.gamification.api.services;
 
 
-import ch.heig.gamification.api.model.ScoreScale;
 import ch.heig.gamification.entities.EventEntity;
-import ch.heig.gamification.entities.RewardEntity;
 import ch.heig.gamification.entities.ScoreRewardEntity;
 import ch.heig.gamification.entities.ScoreScaleEntity;
 import ch.heig.gamification.repositories.RewardRepository;
@@ -31,7 +29,7 @@ public class EventProcessor {
     public void process(EventEntity event){
         ScoreScaleEntity scoreScaleEntity = new ScoreScaleEntity();
         scoreScaleEntity.setApplicationEntity(event.getApplicationEntity());
-        scoreScaleEntity.setName("test_ter");
+        scoreScaleEntity.setName("eeeeee");
         scoreScaleRepository.save(scoreScaleEntity);
 
 

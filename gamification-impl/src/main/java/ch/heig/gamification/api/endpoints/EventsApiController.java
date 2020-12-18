@@ -7,6 +7,7 @@ import ch.heig.gamification.entities.ApplicationEntity;
 import ch.heig.gamification.entities.EventEntity;
 import ch.heig.gamification.entities.UserEntity;
 import ch.heig.gamification.repositories.EventRepository;
+import ch.heig.gamification.repositories.ScoreScaleRepository;
 import ch.heig.gamification.repositories.UserRepository;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +35,7 @@ public class EventsApiController implements EventsApi {
 
     @Autowired
     EventProcessor eventProcessor;
+
 
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Void> registerEvent(@ApiParam(name = "", required = true) @Valid @RequestBody Event event){

@@ -48,13 +48,6 @@ public class RulesApiController implements RulesApi{
         // TODO: check here if rule is wrong (check its attributes)
         // in this case return ResponseEntity.status(HttpStatus.BAD_REQUEST).build(); // or NOT_found
 
-        /*
-        long ssid = Long.parseLong(rule.getScoreScaleId());
-        if(ssid == 0){
-            ssid = Long.MAX_VALUE;
-        }
-        */
-
         RuleEntity newRuleEntity = toRuleEntity(rule);
         RuleEntity alreadyThere = ruleRepository.findByApplicationEntityAndName(
                 (ApplicationEntity)servletRequest.getAttribute("appEntity"), rule.getName());
@@ -63,10 +56,13 @@ public class RulesApiController implements RulesApi{
                 || newRuleEntity.getScoreScaleEntity() == null){
             return ResponseEntity.status(HttpStatus.I_AM_A_TEAPOT).build(); // bien choisir le status de retour
         } else {
+
+
         /*
         if (newRuleEntity.getScoreScaleEntity() == null && newRuleEntity.getBadgeEntity() == null){
             return ResponseEntity.status(HttpStatus.I_AM_A_TEAPOT).build();
-        }*/
+        }
+        */
 
             ruleRepository.save(newRuleEntity);
             URI location = ServletUriComponentsBuilder

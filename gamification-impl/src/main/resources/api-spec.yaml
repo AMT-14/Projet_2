@@ -190,9 +190,9 @@ components:
           type: string
         description:
           type: string
-        event:
+        eventName:
           type: string
-        badgeName:
+        badgeId:
           type: string
         scoreScaleId:
           type: string
@@ -226,8 +226,6 @@ components:
       properties:
         name:
           type: string
-        creationDateTime:
-          type: Date
         inGamifiedAppUserId:
           type: string
         properties:

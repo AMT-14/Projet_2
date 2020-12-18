@@ -64,7 +64,7 @@ public class RulesApiController implements RulesApi{
             return ResponseEntity.status(HttpStatus.I_AM_A_TEAPOT).build(); // bien choisir le status de retour
         } else {
         /*
-        if (newRuleEntity.getScoreScaleEntity() == null && newRuleEntity.getScoreScaleEntity() == null){
+        if (newRuleEntity.getScoreScaleEntity() == null && newRuleEntity.getBadgeEntity() == null){
             return ResponseEntity.status(HttpStatus.I_AM_A_TEAPOT).build();
         }*/
 

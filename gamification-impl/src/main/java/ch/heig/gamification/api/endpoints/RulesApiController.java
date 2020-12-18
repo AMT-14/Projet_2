@@ -29,8 +29,6 @@ public class RulesApiController implements RulesApi{
 
     @Autowired
     ServletRequest req;
-    HttpRequest request = (HttpRequest) req;
-
     @Autowired
     ApplicationRepository applicationRepository;
     @Autowired
@@ -48,19 +46,21 @@ public class RulesApiController implements RulesApi{
         // TODO: check here if rule is wrong (check its attributes)
         // in this case return ResponseEntity.status(HttpStatus.BAD_REQUEST).build(); // or NOT_found
 
+        /*
         long ssid = Long.parseLong(rule.getScoreScaleId());
         if(ssid == 0){
             ssid = Long.MAX_VALUE;
         }
-        ScoreScaleEntity scoreScaleEntity = scoreScaleRepository.findById(ssid);
-        BadgeEntity badgeEntity = badgeRepository.findByName(rule.getBadgeName());
-        if (scoreScaleEntity == null || badgeEntity == null){
+        */
+
+        RuleEntity ruleEntity = toRuleEntity(rule);
+
+        if (ruleEntity.getScoreScaleEntity() == null && ruleEntity.getScoreScaleEntity() == null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
 
-        RuleEntity ruleEntity = toRuleEntity(rule);
-        ruleEntity.setApplicationEntity(applicationEntity);
-        ruleEntity.setScoreScaleEntity(scoreScaleEntity);
+
+
         ruleRepository.save(ruleEntity);
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest().path("/{id}")
@@ -69,14 +69,30 @@ public class RulesApiController implements RulesApi{
         return ResponseEntity.created(location).build();
 
     }
+
+
+
     private RuleEntity toRuleEntity(Rule rule){
+        ApplicationEntity applicationEntity = (ApplicationEntity) req.getAttribute("appEntity");
+        long scoreScaleId = Long.valueOf(rule.getScoreScaleId());
+        long badgeId = Long.valueOf(rule.getBadgeId());
+        ScoreScaleEntity scoreScaleEntity = scoreScaleRepository.findByApplicationEntityAndId(applicationEntity, scoreScaleId);
+        BadgeEntity badgeEntity = badgeRepository.findByApplicationEntityAndId(applicationEntity, badgeId);
+
+
         RuleEntity ruleEntity = new RuleEntity();
         ruleEntity.setName(rule.getName());
         ruleEntity.setDescription(rule.getDescription());
-        ruleEntity.setEvent(rule.getEvent());
-        if(rule.getBadgeName() != null && rule.getBadgeName() != "") { ruleEntity.setBadgeName(rule.getBadgeName());}
-        else { ruleEntity.setBadgeName("");}
-        ruleEntity.setScoreDelta(rule.getScoreDelta());
+        ruleEntity.setEventName(rule.getEventName());
+
+        ruleEntity.setApplicationEntity(applicationEntity);
+        ruleEntity.setScoreScaleEntity(scoreScaleEntity);
+        ruleEntity.setBadgeEntity(badgeEntity);
+        if(scoreScaleEntity == null){
+            ruleEntity.setScoreDelta(0);
+        }else {
+            ruleEntity.setScoreDelta(rule.getScoreDelta());
+        }
         return ruleEntity;
     }
 }

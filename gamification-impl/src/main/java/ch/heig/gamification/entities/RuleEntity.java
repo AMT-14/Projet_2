@@ -15,16 +15,16 @@ public class RuleEntity implements Serializable {
     private long id;
     private String name;
     private String description;
-    private String event;
-    private String badgeName; // voir plus bas
-    private String scoreScaleId;
+    private String eventName;
     private int scoreDelta;
 
     //many to one to badge entity
+    @OneToOne
+    private BadgeEntity badgeEntity;
 
     @ManyToOne
     private ApplicationEntity applicationEntity;
 
-    @ManyToOne
+    @OneToOne
     private ScoreScaleEntity scoreScaleEntity;
 }

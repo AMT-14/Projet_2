@@ -21,6 +21,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import javax.servlet.ServletRequest;
 import javax.validation.Valid;
 import java.net.URI;
+import java.util.Date;
 
 @Controller
 public class EventsApiController implements EventsApi {
@@ -63,7 +64,7 @@ public class EventsApiController implements EventsApi {
         eventEntity.setApplicationEntity(applicationEntity);
         eventEntity.setUser(userEntity);
         eventEntity.setName(event.getName());
-        eventEntity.setCreationDateTime(event.getCreationDateTime());
+        eventEntity.setCreationDateTime(new Date());
         eventEntity.setProperties(event.getProperties());
 
         return eventEntity;

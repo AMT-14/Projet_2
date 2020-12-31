@@ -1,6 +1,6 @@
 package ch.heig.gamification.api.endpoints;
 
-import ch.heig.gamification.api.model.ScoreScale;
+
 import ch.heig.gamification.api.model.Rule;
 import ch.heig.gamification.api.RulesApi;
 import ch.heig.gamification.entities.ApplicationEntity;
@@ -15,6 +15,7 @@ import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -25,6 +26,7 @@ import java.net.URI;
 import java.net.http.HttpRequest;
 import java.util.Optional;
 
+@Controller
 public class RulesApiController implements RulesApi{
 
     @Autowired
@@ -49,20 +51,13 @@ public class RulesApiController implements RulesApi{
         // in this case return ResponseEntity.status(HttpStatus.BAD_REQUEST).build(); // or NOT_found
 
         RuleEntity newRuleEntity = toRuleEntity(rule);
-        RuleEntity alreadyThere = ruleRepository.findByApplicationEntityAndName(
-                (ApplicationEntity)servletRequest.getAttribute("appEntity"), rule.getName());
+        RuleEntity alreadyThere = ruleRepository.findByApplicationEntityAndName(applicationEntity, rule.getName());
 
-        if((alreadyThere != null && alreadyThere.getName().equals(newRuleEntity.getName()))
-                || newRuleEntity.getScoreScaleEntity() == null){
-            return ResponseEntity.status(HttpStatus.I_AM_A_TEAPOT).build(); // bien choisir le status de retour
+        if((alreadyThere != null) || (newRuleEntity.getScoreScaleEntity() == null && newRuleEntity.getBadgeEntity() == null))
+            {
+            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).build(); // bien choisir le status de retour
         } else {
 
-
-        /*
-        if (newRuleEntity.getScoreScaleEntity() == null && newRuleEntity.getBadgeEntity() == null){
-            return ResponseEntity.status(HttpStatus.I_AM_A_TEAPOT).build();
-        }
-        */
 
             ruleRepository.save(newRuleEntity);
             URI location = ServletUriComponentsBuilder
@@ -77,10 +72,9 @@ public class RulesApiController implements RulesApi{
 
     private RuleEntity toRuleEntity(Rule rule){
         ApplicationEntity applicationEntity = (ApplicationEntity) req.getAttribute("appEntity");
-        long scoreScaleId = Long.valueOf(rule.getScoreScaleId());
-        long badgeId = Long.valueOf(rule.getBadgeId());
-        ScoreScaleEntity scoreScaleEntity = scoreScaleRepository.findByApplicationEntityAndId(applicationEntity, scoreScaleId);
-        BadgeEntity badgeEntity = badgeRepository.findByApplicationEntityAndId(applicationEntity, badgeId);
+
+        ScoreScaleEntity scoreScaleEntity = scoreScaleRepository.findByApplicationEntityAndName(applicationEntity, rule.getScoreScaleName());
+        BadgeEntity badgeEntity = badgeRepository.findByApplicationEntityAndName(applicationEntity, rule.getBadgeName());
 
 
         RuleEntity ruleEntity = new RuleEntity();

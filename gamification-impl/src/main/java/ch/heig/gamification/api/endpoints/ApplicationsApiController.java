@@ -19,7 +19,7 @@ public class ApplicationsApiController implements ApplicationsApi {
     @Autowired
     ApplicationRepository applicationRepository;
 
-    public ResponseEntity<UUID> registerApplication(@ApiParam(value = "", required = true) @Valid @RequestBody Application application) {
+    public ResponseEntity<String> registerApplication(@ApiParam(value = "", required = true) @Valid @RequestBody Application application) {
         ApplicationEntity newApplicationEntity = toApplicationEntity(application);
         applicationRepository.save(newApplicationEntity);
 //        Long id = newApplicationEntity.getId();
@@ -28,7 +28,7 @@ public class ApplicationsApiController implements ApplicationsApi {
 //                .fromCurrentRequest().path("/{id}")
 //                .buildAndExpand(newApplicationEntity.getId()).toUri();
 
-        return ResponseEntity.ok(newApplicationEntity.getApiKey());
+        return ResponseEntity.ok(newApplicationEntity.getApiKey().toString());
     }
     private ApplicationEntity toApplicationEntity(Application application){
         ApplicationEntity entity = new ApplicationEntity();

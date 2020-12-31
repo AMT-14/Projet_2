@@ -67,6 +67,7 @@ public class ApiAuthFilter implements Filter {
         registrationBean.addUrlPatterns("/badge/*");
         registrationBean.addUrlPatterns("/events/*");
         registrationBean.addUrlPatterns("/rules/*");
+
         return registrationBean;
     }
 }

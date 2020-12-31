@@ -6,6 +6,7 @@ import ch.heig.gamification.api.UsersApi;
 import ch.heig.gamification.entities.ApplicationEntity;
 import ch.heig.gamification.entities.UserEntity;
 import ch.heig.gamification.entities.BadgeEntity;
+import ch.heig.gamification.repositories.RewardRepository;
 import ch.heig.gamification.repositories.UserRepository;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,9 @@ public class UsersApiController implements UsersApi {
     @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    RewardRepository rewardRepository;
+
     public ResponseEntity<List<User>> getUsers() {
         HttpServletRequest req = (HttpServletRequest) request;
         ApplicationEntity applicationEntity = (ApplicationEntity) req.getAttribute("appEntity");
@@ -42,7 +46,7 @@ public class UsersApiController implements UsersApi {
     }
 
 
-    public ResponseEntity<User> getUser(@ApiParam(value = "", required = true) @PathVariable("id") String id){
+    public ResponseEntity<UserStat> getUser(@ApiParam(value = "", required = true) @PathVariable("id") String id){
         HttpServletRequest req = (HttpServletRequest) request;
         ApplicationEntity applicationEntity = (ApplicationEntity) req.getAttribute("appEntity");
         long userId = Long.valueOf(id);
@@ -65,7 +69,7 @@ public class UsersApiController implements UsersApi {
         UserStat userStat = new UserStat();
         //TODO faire les requêtes
 
-        // rewardRepository.getBadgesFromUser(userEntity);
+        //userStat.setBadges(rewardRepository.getBadgesFromUser(userEntity));
         // rewardRepository.getScoresFromUser(userEntity);
 
         return userStat;

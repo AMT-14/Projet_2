@@ -13,12 +13,11 @@ import java.util.List;
 
 public interface RewardRepository extends CrudRepository<RewardEntity, Long> {
     //TODO implémenter getBadgesFromUser getScoresFromUser à partir des queries
-    @Query("SELECT DISTINCT badge_entity FROM reward_entity WHERE reward_entity.user=")
+  /*  @Query("SELECT DISTINCT badge_entity FROM reward_entity WHERE user=:usr")
     List<BadgeEntity> getBadgesFromUser(                                    
-            @Param("") UserEntity userEntity);
+            @Param("usr") UserEntity userEntity);
 
     @Query("SELECT DISTINCT badge_entity FROM reward_entity")
     List<BadgeEntity> getScoresFromUser(UserEntity userEntity);
-
-
+*/
 }

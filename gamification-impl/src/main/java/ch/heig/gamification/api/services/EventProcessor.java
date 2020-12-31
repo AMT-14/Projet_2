@@ -40,7 +40,7 @@ public class EventProcessor {
                     rewardEntity.setDelta(rule.getScoreDelta());
                     rewardRepository.save(rewardEntity);
                 }
-                if(rule.getBadgeEntity() != null) {
+                if(rule.getBadgeEntity() != null) { // TODO Verifier que le joueur ne possede pas déjà le Badge.
                     BadgeRewardEntity rewardEntity = new BadgeRewardEntity();
                     rewardEntity.setApplicationEntity(event.getApplicationEntity());
                     rewardEntity.setUser(event.getUser());

@@ -90,7 +90,7 @@ paths:
             schema:
               $ref: '#/components/schemas/Event'
       responses:
-        '201':
+        '200':
           description: Event registered successfully
 
   /badge:
@@ -163,7 +163,7 @@ paths:
           content:
             'application/json':
               schema:
-                $ref: '#/components/schemas/User'
+                $ref: '#/components/schemas/UserStat'
 
 
 components:
@@ -190,9 +190,9 @@ components:
           type: string
         description:
           type: string
-        event:
+        eventName:
           type: string
-        badgeName:
+        badgeId:
           type: string
         scoreScaleId:
           type: string
@@ -209,26 +209,38 @@ components:
       properties:
         name:
           type: string
-    Score:
-      type: object
-      properties:
-        value:
-          type: Integer
     User:
       type: object
       properties:
-        badges:
-          type: array
-          items:
-            $ref: '#/components/schema/Badge'
+        inGamifiedAppUserId:
+          type: string
     Event:
       type: object
       properties:
         name:
           type: string
-        creationDateTime:
-          type: Date
         inGamifiedAppUserId:
           type: string
         properties:
           type: string
+    UserScore:
+      type: object
+      properties:
+        scoreName:
+          type: string
+        scoreValue:
+          type: int
+    UserStat:
+      type: object
+      properties:
+        user:
+          type: User
+        scores:
+          type : array
+          items:
+            $ref: '#components/schemas/UserScore'
+        badges:
+          type: array
+          items:
+            $ref: '#components/schemas/Badge'
+

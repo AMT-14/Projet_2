@@ -50,12 +50,12 @@ public class UserSteps {
         main.setEvent(new Event()
             .name("event 2319")
             .inGamifiedAppUserId("101")
-            .creationDateTime(Date.from(Instant.now()))
+            //.creationDateTime(Date.from(Instant.now()))
             .properties("eventType"));
 
         main.setUser(new User()
-                // TODO userID ?
-                .badges(new ArrayList<>())
+                .inGamifiedAppUserId("101")
+                //.badges(new ArrayList<>())
         );
     }
 
@@ -67,8 +67,8 @@ public class UserSteps {
     @Given("^I have a wrong user$")
     public void i_have_a_wrong_user() {
         main.setUser(new User()
-                // TODO userID ?
-                .badges(new ArrayList<>())
+                .inGamifiedAppUserId("420")
+                //.badges(new ArrayList<>())
         );
     }
 

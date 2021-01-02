@@ -35,7 +35,7 @@ public class EventSteps {
         Event event = new Event()
                 .name("event 2319")
                 .inGamifiedAppUserId("userID")
-                .creationDateTime(Date.from(Instant.now()))
+                //.creationDateTime(Date.from(Instant.now()))
                 .properties("eventType");
 
         main.setEvent(event);

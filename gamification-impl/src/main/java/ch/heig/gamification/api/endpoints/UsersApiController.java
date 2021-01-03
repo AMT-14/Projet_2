@@ -1,12 +1,14 @@
 package ch.heig.gamification.api.endpoints;
 
+import ch.heig.gamification.api.model.Badge;
 import ch.heig.gamification.api.model.User;
 import ch.heig.gamification.api.model.UserStat;
 import ch.heig.gamification.api.UsersApi;
 import ch.heig.gamification.entities.ApplicationEntity;
 import ch.heig.gamification.entities.UserEntity;
 import ch.heig.gamification.entities.BadgeEntity;
-import ch.heig.gamification.repositories.RewardRepository;
+import ch.heig.gamification.repositories.BadgeGetter;
+import ch.heig.gamification.repositories.BadgeRewardRepository;
 import ch.heig.gamification.repositories.UserRepository;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,13 +17,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.server.ResponseStatusException;
+import ch.heig.gamification.api.util.DtoConversion;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.net.URI;
+import java.util.*;
 
 @Controller
 public class UsersApiController implements UsersApi {
@@ -33,11 +35,11 @@ public class UsersApiController implements UsersApi {
     UserRepository userRepository;
 
     @Autowired
-    RewardRepository rewardRepository;
+    BadgeRewardRepository badgeRewardRepository;
 
     public ResponseEntity<List<User>> getUsers() {
-        HttpServletRequest req = (HttpServletRequest) request;
-        ApplicationEntity applicationEntity = (ApplicationEntity) req.getAttribute("appEntity");
+       //HttpServletRequest req = (HttpServletRequest) request;
+        ApplicationEntity applicationEntity = (ApplicationEntity) request.getAttribute("appEntity");
         List<User> users = new ArrayList<>();
         for(UserEntity userEntity : userRepository.findAllByAppEntity(applicationEntity)){
             users.add(toUser(userEntity)); // transforme userEntity -> User
@@ -46,14 +48,14 @@ public class UsersApiController implements UsersApi {
     }
 
 
-    public ResponseEntity<UserStat> getUser(@ApiParam(value = "", required = true) @PathVariable("id") String id){
+    public ResponseEntity<UserStat> getUser(@ApiParam(value = "", required = true) @PathVariable("inGamifiedApplicationUser") String id){
         HttpServletRequest req = (HttpServletRequest) request;
         ApplicationEntity applicationEntity = (ApplicationEntity) req.getAttribute("appEntity");
-        long userId = Long.valueOf(id);
-        UserEntity userEntity = userRepository.findById(userId);
-       if(userEntity != null){
+        UserEntity userEntity = userRepository.findByInGamifiedAppUserIdAndAppEntity(id, applicationEntity);
 
-           return null;//ResponseEntity.ok(toUser(userEntity));
+
+        if(userEntity != null){
+           return ResponseEntity.ok(getStat(userEntity)); //ResponseEntity.ok(toUser(userEntity));
        } else {
           throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
@@ -68,6 +70,13 @@ public class UsersApiController implements UsersApi {
     private UserStat getStat(UserEntity userEntity){
         UserStat userStat = new UserStat();
         //TODO faire les requêtes
+        userStat.setUser(toUser(userEntity));
+        List<Badge> badges = Collections.emptyList();
+        List<BadgeGetter> badgeEntities = badgeRewardRepository.findByUserEntity(userEntity);
+        for (BadgeGetter badgeGetter : badgeEntities){
+            badges.add(DtoConversion.toBadge(badgeGetter.getBadgeEntityId()));
+        }
+        userStat.setBadges(badges);
 
         //userStat.setBadges(rewardRepository.getBadgesFromUser(userEntity));
         // rewardRepository.getScoresFromUser(userEntity);

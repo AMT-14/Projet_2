@@ -2,7 +2,8 @@ package ch.heig.gamification.api.services;
 
 
 import ch.heig.gamification.entities.*;
-import ch.heig.gamification.repositories.RewardRepository;
+import ch.heig.gamification.repositories.BadgeRewardRepository;
+import ch.heig.gamification.repositories.ScoreRewardRepository;
 import ch.heig.gamification.repositories.ScoreScaleRepository;
 import ch.heig.gamification.repositories.RuleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,11 @@ public class EventProcessor {
     private RuleRepository ruleRepository;
 
     @Autowired
-    private RewardRepository rewardRepository;
+    private ScoreRewardRepository scoreRewardRepository;
+
+    @Autowired
+    private BadgeRewardRepository badgeRewardRepository;
+
 
     @Async
     @Transactional
@@ -30,23 +35,23 @@ public class EventProcessor {
         List<RuleEntity> rules = ruleRepository.findAllByApplicationEntity(event.getApplicationEntity());
 
         for (RuleEntity rule : rules){
-            if(rule.getEventName() == event.getName()){
+            if(rule.getEventName().equals(event.getName())){
                 if(rule.getScoreScaleEntity() != null) {
                     ScoreRewardEntity rewardEntity = new ScoreRewardEntity();
                     rewardEntity.setApplicationEntity(event.getApplicationEntity());
-                    rewardEntity.setUser(event.getUser());
+                    rewardEntity.setUserEntity(event.getUserEntity());
                     rewardEntity.setTimeStamp(event.getCreationDateTime());
                     rewardEntity.setScoreScaleEntity(rule.getScoreScaleEntity());
                     rewardEntity.setDelta(rule.getScoreDelta());
-                    rewardRepository.save(rewardEntity);
+                    scoreRewardRepository.save(rewardEntity);
                 }
-                if(rule.getBadgeEntity() != null) { // TODO Verifier que le joueur ne possede pas déjà le Badge.
+                if(badgeRewardRepository.findByUserEntityAndBadgeEntity(event.getUserEntity(), rule.getBadgeEntity()) == null) {
                     BadgeRewardEntity rewardEntity = new BadgeRewardEntity();
                     rewardEntity.setApplicationEntity(event.getApplicationEntity());
-                    rewardEntity.setUser(event.getUser());
+                    rewardEntity.setUserEntity(event.getUserEntity());
                     rewardEntity.setTimeStamp(event.getCreationDateTime());
                     rewardEntity.setBadgeEntity(rule.getBadgeEntity());
-                    rewardRepository.save(rewardEntity);
+                    badgeRewardRepository.save(rewardEntity);
                 }
             }
         }

@@ -129,15 +129,15 @@ paths:
                 items:
                   $ref: '#/components/schemas/User'
 
-  /users/{id}:
+  /users/{inGamifiedApplicationUser}:
     get:
       description: get one user, with inAppId
       operationId: getUser
       parameters:
         - in: path
-          name: id
+          name: inGamifiedApplicationUser
           schema:
-            type: integer
+            type: string
           required: true
       responses:
         '200':

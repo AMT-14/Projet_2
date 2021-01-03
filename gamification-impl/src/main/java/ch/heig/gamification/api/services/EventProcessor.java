@@ -55,28 +55,5 @@ public class EventProcessor {
                 }
             }
         }
-
-
-
-
-/*
-
-        ScoreScaleEntity scoreScaleEntity = new ScoreScaleEntity();
-        scoreScaleEntity.setApplicationEntity(event.getApplicationEntity());
-        scoreScaleEntity.setName("eeeeee");
-        scoreScaleRepository.save(scoreScaleEntity);
-
-
-        ScoreRewardEntity rewardEntity = new ScoreRewardEntity();
-        rewardEntity.setApplicationEntity(event.getApplicationEntity());
-        rewardEntity.setUser(event.getUser());
-        rewardEntity.setTimeStamp(event.getCreationDateTime());
-        rewardEntity.setDelta(5);
-        rewardEntity.setScoreScaleEntity(scoreScaleEntity);
-
-
-        rewardRepository.save(rewardEntity);
-*/
-
     }
 }

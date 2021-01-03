@@ -49,8 +49,7 @@ public class UsersApiController implements UsersApi {
 
 
     public ResponseEntity<UserStat> getUser(@ApiParam(value = "", required = true) @PathVariable("inGamifiedApplicationUser") String id){
-        HttpServletRequest req = (HttpServletRequest) request;
-        ApplicationEntity applicationEntity = (ApplicationEntity) req.getAttribute("appEntity");
+        ApplicationEntity applicationEntity = (ApplicationEntity) request.getAttribute("appEntity");
         UserEntity userEntity = userRepository.findByInGamifiedAppUserIdAndAppEntity(id, applicationEntity);
 
 
@@ -69,12 +68,16 @@ public class UsersApiController implements UsersApi {
 
     private UserStat getStat(UserEntity userEntity){
         UserStat userStat = new UserStat();
-        //TODO faire les requêtes
+
         userStat.setUser(toUser(userEntity));
-        List<Badge> badges = Collections.emptyList();
+
+        List<Badge> badges = new ArrayList();
         List<BadgeGetter> badgeEntities = badgeRewardRepository.findByUserEntity(userEntity);
+
         for (BadgeGetter badgeGetter : badgeEntities){
-            badges.add(DtoConversion.toBadge(badgeGetter.getBadgeEntityId()));
+            BadgeEntity badgeEntity = badgeGetter.getBadgeEntity();
+            Badge badge = DtoConversion.toBadge(badgeEntity);
+            badges.add(badge);
         }
         userStat.setBadges(badges);
 

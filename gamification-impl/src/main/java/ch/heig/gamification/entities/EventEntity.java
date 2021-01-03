@@ -16,7 +16,7 @@ public class EventEntity implements Serializable {
     private String name;
 
     @ManyToOne
-    private UserEntity user;
+    private UserEntity userEntity;
 
     private String properties;
 

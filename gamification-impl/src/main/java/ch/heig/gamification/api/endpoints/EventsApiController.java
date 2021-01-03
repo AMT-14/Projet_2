@@ -59,10 +59,13 @@ public class EventsApiController implements EventsApi {
             userEntity.setAppEntity(applicationEntity);
             userEntity.setInGamifiedAppUserId(event.getInGamifiedAppUserId());
             userRepository.save(userEntity);
+            URI location = ServletUriComponentsBuilder
+                    .fromCurrentRequest().path("/{inGamifiedApplicationUser}")
+                    .buildAndExpand(userEntity.getInGamifiedAppUserId()).toUri();
         }
         EventEntity eventEntity = new EventEntity();
         eventEntity.setApplicationEntity(applicationEntity);
-        eventEntity.setUser(userEntity);
+        eventEntity.setUserEntity(userEntity);
         eventEntity.setName(event.getName());
         eventEntity.setCreationDateTime(new Date());
         eventEntity.setProperties(event.getProperties());

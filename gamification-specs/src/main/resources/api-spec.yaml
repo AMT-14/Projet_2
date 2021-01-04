@@ -11,8 +11,6 @@ paths:
     post:
       description: Register a score scale for a specifique api
       operationId: createScoreScale
-      security:
-        - ApiKeyAuth: []
       requestBody:
         content:
           'application/json':
@@ -31,13 +29,6 @@ paths:
           schema:
             type: integer
           required: true
-      security:
-        - ApiKeyAuth: []
-      requestBody:
-        content:
-          'application/json':
-            schema:
-              $ref: '#/components/schemas/ScoreScale'
       responses:
         '200':
           description: scoreScale successfully provided
@@ -60,7 +51,7 @@ paths:
           content:
             'application/json':
               schema:
-                type: UUID
+                type: string
 
   /rules:
     post:
@@ -97,8 +88,6 @@ paths:
     post:
       description: Register a new badge for a specific API
       operationId: createBadge
-      security:
-        - ApiKeyAuth: []
       requestBody:
         content:
           'application/json':
@@ -118,13 +107,6 @@ paths:
           schema:
             type: integer
           required: true
-      security:
-        - ApiKeyAuth: []
-      requestBody:
-        content:
-          'application/json':
-            schema:
-              $ref: '#/components/schemas/Badge'
       responses:
         '200':
           description: badge successfully provided
@@ -147,15 +129,15 @@ paths:
                 items:
                   $ref: '#/components/schemas/User'
 
-  /users/{id}:
+  /users/{inGamifiedApplicationUser}:
     get:
       description: get one user, with inAppId
       operationId: getUser
       parameters:
         - in: path
-          name: id
+          name: inGamifiedApplicationUser
           schema:
-            type: integer
+            type: string
           required: true
       responses:
         '200':
@@ -192,13 +174,25 @@ components:
           type: string
         eventName:
           type: string
-        badgeId:
+        badgeName:
           type: string
-        scoreScaleId:
+        scoreScaleName:
           type: string
         scoreDelta:
           type: integer
-
+    UserStat:
+      type: object
+      properties:
+        user:
+          $ref: '#/components/schemas/User'
+        scores:
+          type : array
+          items:
+            $ref: '#/components/schemas/UserScore'
+        badges:
+          type: array
+          items:
+            $ref: '#/components/schemas/Badge'
     ScoreScale:
       type: object
       properties:
@@ -229,18 +223,4 @@ components:
         scoreName:
           type: string
         scoreValue:
-          type: int
-    UserStat:
-      type: object
-      properties:
-        user:
-          type: User
-        scores:
-          type : array
-          items:
-            $ref: '#components/schemas/UserScore'
-        badges:
-          type: array
-          items:
-            $ref: '#components/schemas/Badge'
-
+          type: integer

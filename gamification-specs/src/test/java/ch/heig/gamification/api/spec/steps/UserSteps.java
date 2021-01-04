@@ -35,8 +35,7 @@ public class UserSteps {
     @When("^I send a GET to the /users/\\{inGamifiedAppUserId} endpoint$")
     public void i_send_a_GET_to_the_UsersInGamifiedAppUserId_endpoint() {
         try {
-            int id = Integer.valueOf(main.getEvent().getInGamifiedAppUserId());
-            ApiResponse response = api.getUserWithHttpInfo(id);
+            ApiResponse response = api.getUserWithHttpInfo(main.getEvent().getInGamifiedAppUserId());
             env.setApiResponse(response);
             // now process
             env.ApiResponseProcessor(env.getApiResponse());
@@ -49,25 +48,25 @@ public class UserSteps {
     public void i_have_an_event_payload_and_a_user() {
         main.setEvent(new Event()
             .name("event 2319")
-            .inGamifiedAppUserId("101")
+            .inGamifiedAppUserId("UserID")
             //.creationDateTime(Date.from(Instant.now()))
             .properties("eventType"));
 
         main.setUser(new User()
-                .inGamifiedAppUserId("101")
+                .inGamifiedAppUserId("UserID")
                 //.badges(new ArrayList<>())
         );
     }
 
     @Then("^I receive the correct user payload with id match$")
     public void i_receive_the_correct_user_payload_with_id_match() {
-        assertEquals(main.getUser(), "101");
+        assertEquals(main.getUser(), "UserID");
     }
 
     @Given("^I have a wrong user$")
     public void i_have_a_wrong_user() {
         main.setUser(new User()
-                .inGamifiedAppUserId("420")
+                .inGamifiedAppUserId("falseID")
                 //.badges(new ArrayList<>())
         );
     }

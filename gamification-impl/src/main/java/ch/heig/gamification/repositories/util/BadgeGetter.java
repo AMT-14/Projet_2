@@ -1,4 +1,4 @@
-package ch.heig.gamification.repositories;
+package ch.heig.gamification.repositories.util;
 
 import ch.heig.gamification.entities.BadgeEntity;
 

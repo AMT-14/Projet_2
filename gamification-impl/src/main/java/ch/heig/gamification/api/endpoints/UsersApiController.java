@@ -4,7 +4,7 @@ import ch.heig.gamification.api.model.*;
 import ch.heig.gamification.api.UsersApi;
 import ch.heig.gamification.entities.*;
 import ch.heig.gamification.repositories.ScoreRewardRepository;
-import ch.heig.gamification.repositories.util.BadgeGetter;
+import ch.heig.gamification.repositories.util.BadgeGetterInterface;
 import ch.heig.gamification.repositories.BadgeRewardRepository;
 import ch.heig.gamification.repositories.UserRepository;
 import ch.heig.gamification.repositories.util.ScoreGetter;
@@ -36,11 +36,10 @@ public class UsersApiController implements UsersApi {
     ScoreRewardRepository scoreRewardRepository;
 
     public ResponseEntity<List<User>> getUsers() {
-       //HttpServletRequest req = (HttpServletRequest) request;
         ApplicationEntity applicationEntity = (ApplicationEntity) request.getAttribute("appEntity");
         List<User> users = new ArrayList<>();
         for(UserEntity userEntity : userRepository.findAllByAppEntity(applicationEntity)){
-            users.add(toUser(userEntity)); // transforme userEntity -> User
+            users.add(toUser(userEntity));
         }
         return ResponseEntity.ok(users);
     }
@@ -70,20 +69,15 @@ public class UsersApiController implements UsersApi {
         userStat.setUser(toUser(userEntity));
 
         List<Badge> badges = new ArrayList();
-        List<BadgeGetter> badgeEntities = badgeRewardRepository.findByUserEntityAndApplicationEntity(userEntity, applicationEntity);
-
-        for (BadgeGetter badgeGetter : badgeEntities){
+        List<BadgeGetterInterface> badgeEntities = badgeRewardRepository.findByUserEntityAndApplicationEntity(userEntity, applicationEntity);
+        for (BadgeGetterInterface badgeGetter : badgeEntities){
             badges.add(DtoConversion.toBadge(badgeGetter.getBadgeEntity()));
         }
         userStat.setBadges(badges);
 
         List<UserScore> userScores= new ArrayList();
         List<ScoreGetter> scoreEntities = scoreRewardRepository.countScorePoints(userEntity, applicationEntity);
-
         for (ScoreGetter scoreEntity : scoreEntities){
-            ScoreScaleEntity scoreScaleEntity = scoreEntity.getScoreScaleEntity();
-            int value = scoreEntity.getPoint();
-
             UserScore userScore = new UserScore();
             userScore.setScoreName(scoreEntity.getScoreScaleEntity().getName());
             userScore.setScoreValue(scoreEntity.getPoint());

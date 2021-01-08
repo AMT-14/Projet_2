@@ -2,6 +2,6 @@ package ch.heig.gamification.repositories.util;
 
 import ch.heig.gamification.entities.BadgeEntity;
 
-public interface BadgeGetter {
+public interface BadgeGetterInterface {
     BadgeEntity getBadgeEntity();
 }

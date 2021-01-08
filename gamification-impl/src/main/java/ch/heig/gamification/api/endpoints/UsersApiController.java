@@ -69,31 +69,27 @@ public class UsersApiController implements UsersApi {
 
         userStat.setUser(toUser(userEntity));
 
-       /* List<Badge> badges = new ArrayList();
-        List<BadgeGetter> badgeEntities = badgeRewardRepository.findByUserEntity(userEntity);
+        List<Badge> badges = new ArrayList();
+        List<BadgeGetter> badgeEntities = badgeRewardRepository.findByUserEntityAndApplicationEntity(userEntity, applicationEntity);
 
         for (BadgeGetter badgeGetter : badgeEntities){
             badges.add(DtoConversion.toBadge(badgeGetter.getBadgeEntity()));
         }
         userStat.setBadges(badges);
-        */
+
         List<UserScore> userScores= new ArrayList();
         List<ScoreGetter> scoreEntities = scoreRewardRepository.countScorePoints(userEntity, applicationEntity);
-       //List<ScoreRewardEntity> scoreRewardEntities = scoreRewardRepository.countScorePoints(userEntity, applicationEntity);
-        /*int i = 0 ;
-        for (ScoreRewardEntity scoreRewardEntity scoreRewardEntities){
-            i += scoreRewardEntity.getDelta();
-        }*/
-/*        for (ScoreGetter scoreEntity : scoreEntities){
+
+        for (ScoreGetter scoreEntity : scoreEntities){
             ScoreScaleEntity scoreScaleEntity = scoreEntity.getScoreScaleEntity();
-            int value = scoreEntity.getPoints();
+            int value = scoreEntity.getPoint();
 
             UserScore userScore = new UserScore();
             userScore.setScoreName(scoreEntity.getScoreScaleEntity().getName());
-            userScore.setScoreValue(scoreEntity.getPoints());
+            userScore.setScoreValue(scoreEntity.getPoint());
             userScores.add(userScore);
         }
-        userStat.setScores(userScores);*/
+        userStat.setScores(userScores);
 
         return userStat;
     }

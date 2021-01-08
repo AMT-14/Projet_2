@@ -45,7 +45,7 @@ public class EventProcessor {
                     rewardEntity.setDelta(rule.getScoreDelta());
                     scoreRewardRepository.save(rewardEntity);
                 }
-                if(badgeRewardRepository.findByUserEntityAndBadgeEntity(event.getUserEntity(), rule.getBadgeEntity()) == null) {
+                if(rule.getBadgeEntity() != null && badgeRewardRepository.findByUserEntityAndBadgeEntity(event.getUserEntity(), rule.getBadgeEntity()) == null) {
                     BadgeRewardEntity rewardEntity = new BadgeRewardEntity();
                     rewardEntity.setApplicationEntity(event.getApplicationEntity());
                     rewardEntity.setUserEntity(event.getUserEntity());

@@ -5,5 +5,5 @@ import ch.heig.gamification.entities.ScoreScaleEntity;
 
 public interface ScoreGetter {
     ScoreScaleEntity getScoreScaleEntity();
-    int getPoints();
+    int getPoint();
 }

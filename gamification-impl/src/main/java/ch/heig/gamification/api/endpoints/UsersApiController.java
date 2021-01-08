@@ -79,7 +79,12 @@ public class UsersApiController implements UsersApi {
         */
         List<UserScore> userScores= new ArrayList();
         List<ScoreGetter> scoreEntities = scoreRewardRepository.countScorePoints(userEntity, applicationEntity);
-        for (ScoreGetter scoreEntity : scoreEntities){
+       //List<ScoreRewardEntity> scoreRewardEntities = scoreRewardRepository.countScorePoints(userEntity, applicationEntity);
+        /*int i = 0 ;
+        for (ScoreRewardEntity scoreRewardEntity scoreRewardEntities){
+            i += scoreRewardEntity.getDelta();
+        }*/
+/*        for (ScoreGetter scoreEntity : scoreEntities){
             ScoreScaleEntity scoreScaleEntity = scoreEntity.getScoreScaleEntity();
             int value = scoreEntity.getPoints();
 
@@ -88,7 +93,7 @@ public class UsersApiController implements UsersApi {
             userScore.setScoreValue(scoreEntity.getPoints());
             userScores.add(userScore);
         }
-        userStat.setScores(userScores);
+        userStat.setScores(userScores);*/
 
         return userStat;
     }

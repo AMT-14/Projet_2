@@ -11,6 +11,7 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface ScoreRewardRepository extends CrudRepository<ScoreRewardEntity, Long> {
-    @Query("SELECT s.scoreScaleEntity , SUM(s.delta) AS point FROM ScoreRewardEntity AS s WHERE s.userEntity = :u AND s.applicationEntity = :app GROUP BY s.scoreScaleEntity") // WHERE s.UserEntity = :u")
-    List<ScoreGetter> countScorePoints (@Param("u") UserEntity userEntity, @Param("app")ApplicationEntity applicationEntity);
+
+    @Query("SELECT s.scoreScaleEntity AS scoreScaleEntity, SUM(s.delta) AS point FROM ScoreRewardEntity as s WHERE s.userEntity = :u AND s.applicationEntity = :app GROUP BY s.scoreScaleEntity")
+    List<ScoreGetter> countScorePoints(@Param("u") UserEntity userEntity, @Param("app")ApplicationEntity applicationEntity);
 }

@@ -220,7 +220,7 @@ components:
     UserScore:
       type: object
       properties:
-        scoreName:
-          type: string
+        score:
+          type: '#/components/schemas/Score'
         scoreValue:
           type: integer

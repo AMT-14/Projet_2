@@ -1,13 +1,8 @@
 package ch.heig.gamification.api.endpoints;
 
-import ch.heig.gamification.api.model.Badge;
-import ch.heig.gamification.api.model.User;
-import ch.heig.gamification.api.model.UserScore;
-import ch.heig.gamification.api.model.UserStat;
+import ch.heig.gamification.api.model.*;
 import ch.heig.gamification.api.UsersApi;
-import ch.heig.gamification.entities.ApplicationEntity;
-import ch.heig.gamification.entities.UserEntity;
-import ch.heig.gamification.entities.BadgeEntity;
+import ch.heig.gamification.entities.*;
 import ch.heig.gamification.repositories.ScoreRewardRepository;
 import ch.heig.gamification.repositories.util.BadgeGetter;
 import ch.heig.gamification.repositories.BadgeRewardRepository;
@@ -57,7 +52,7 @@ public class UsersApiController implements UsersApi {
 
 
         if(userEntity != null){
-           return ResponseEntity.ok(getStat(userEntity)); //ResponseEntity.ok(toUser(userEntity));
+           return ResponseEntity.ok(getStat(userEntity, applicationEntity)); //ResponseEntity.ok(toUser(userEntity));
        } else {
           throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
@@ -69,22 +64,25 @@ public class UsersApiController implements UsersApi {
         return user;
     }
 
-    private UserStat getStat(UserEntity userEntity){
+    private UserStat getStat(UserEntity userEntity, ApplicationEntity applicationEntity){
         UserStat userStat = new UserStat();
 
         userStat.setUser(toUser(userEntity));
 
-        List<Badge> badges = new ArrayList();
+       /* List<Badge> badges = new ArrayList();
         List<BadgeGetter> badgeEntities = badgeRewardRepository.findByUserEntity(userEntity);
 
         for (BadgeGetter badgeGetter : badgeEntities){
             badges.add(DtoConversion.toBadge(badgeGetter.getBadgeEntity()));
         }
         userStat.setBadges(badges);
-
+        */
         List<UserScore> userScores= new ArrayList();
-        List<ScoreGetter> scoreEntities = scoreRewardRepository.countScorePoints(userEntity);
+        List<ScoreGetter> scoreEntities = scoreRewardRepository.countScorePoints(userEntity, applicationEntity);
         for (ScoreGetter scoreEntity : scoreEntities){
+            ScoreScaleEntity scoreScaleEntity = scoreEntity.getScoreScaleEntity();
+            int value = scoreEntity.getPoints();
+
             UserScore userScore = new UserScore();
             userScore.setScoreName(scoreEntity.getScoreScaleEntity().getName());
             userScore.setScoreValue(scoreEntity.getPoints());

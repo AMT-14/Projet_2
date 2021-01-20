@@ -48,7 +48,7 @@ public class Environment {
         return api;
     }
 
-    public void ApiExceptionProcessor(ApiException e){
+    public void apiExceptionProcessor(ApiException e){
         isException = true;
         apiException = e;
         httpStatus = e.getCode();
@@ -57,10 +57,12 @@ public class Environment {
         apiResponse = null;
     }
 
-    public void ApiResponseProcessor(ApiResponse r){
+    public void apiResponseProcessor(ApiResponse r){
         apiResponse = r;
         httpStatus = r.getStatusCode();
-        apiKey = r.getHeaders().get("X-API-KEY").toString();
+        if(r.getData() != null) {
+            apiKey = r.getData().toString();
+        }
 
         // exception should be negated in this case
         isException = false;

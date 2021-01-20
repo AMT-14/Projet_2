@@ -1,7 +1,7 @@
 Feature: Badge interaction
 
   Background:
-    Given there is an Application server
+    Given I have registered and set my application
 
   Scenario: creation of badge
     Given I have a badge payload
@@ -17,5 +17,5 @@ Feature: Badge interaction
     Given I have a badge payload
     When I POST it to the /badges endpoint
     And I POST it to the /badges endpoint
-    Then I receive a 422 status code
+    Then I receive a 404 status code
 

@@ -79,7 +79,7 @@ public class UsersApiController implements UsersApi {
         List<ScoreGetter> scoreEntities = scoreRewardRepository.countScorePoints(userEntity, applicationEntity);
         for (ScoreGetter scoreEntity : scoreEntities){
             UserScore userScore = new UserScore();
-            userScore.setScoreName(scoreEntity.getScoreScaleEntity().getName());
+            //userScore.setScoreName(scoreEntity.getScoreScaleEntity().getName());
             userScore.setScoreValue(scoreEntity.getPoint());
             userScores.add(userScore);
         }

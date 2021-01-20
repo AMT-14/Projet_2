@@ -33,7 +33,10 @@ public class ApplicationSteps {
     @Given("there is an Application server")
     public void there_is_an_Application_server() throws Throwable {
         assertNotNull(api);
+        // todo set the api key in the header by default
+        // api.getApiClient().addDefaultHeader("", );
     }
+
 
     @Given("^I have an application payload$")
     public void i_have_an_application_payload() throws Throwable {

@@ -1,6 +1,6 @@
 package ch.heig.gamification.api.endpoints;
 
-import ch.heig.gamification.api.BadgeApi;
+import ch.heig.gamification.api.BadgesApi;
 import ch.heig.gamification.api.model.Badge;
 import ch.heig.gamification.entities.BadgeEntity;
 import ch.heig.gamification.repositories.BadgeRepository;
@@ -22,7 +22,7 @@ import javax.validation.Valid;
 import java.net.URI;
 
 @Controller
-public class BadgesApiController implements BadgeApi {
+public class BadgesApiController implements BadgesApi {
 
     @Autowired
     BadgeRepository badgeRepository;

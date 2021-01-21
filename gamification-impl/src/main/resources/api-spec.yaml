@@ -49,9 +49,9 @@ paths:
         '200':
           description: Application registered successfully
           content:
-            'text/plain':
+            'plain/text':
               schema:
-                type: string
+                $ref: '#/components/schemas/ApiKey'
 
   /rules:
     post:
@@ -224,3 +224,5 @@ components:
           $ref: '#/components/schemas/ScoreScale'
         scoreValue:
           type: integer
+    ApiKey:
+          type: string

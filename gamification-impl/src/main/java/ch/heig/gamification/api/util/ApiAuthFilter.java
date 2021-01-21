@@ -46,7 +46,7 @@ public class ApiAuthFilter implements Filter {
             errorFlag = true;
         }
         if(errorFlag) {
-            res.sendError(HttpServletResponse.SC_FORBIDDEN, "API-KEY is invalid");
+            res.sendError(HttpServletResponse.SC_UNAUTHORIZED, "API-KEY is invalid");
         }
     }
 
@@ -64,7 +64,7 @@ public class ApiAuthFilter implements Filter {
         registrationBean.setFilter(this);
         registrationBean.addUrlPatterns("/scoreScales/*");
         registrationBean.addUrlPatterns("/users/*");
-        registrationBean.addUrlPatterns("/badge/*");
+        registrationBean.addUrlPatterns("/badges/*");
         registrationBean.addUrlPatterns("/events/*");
         registrationBean.addUrlPatterns("/rules/*");
 

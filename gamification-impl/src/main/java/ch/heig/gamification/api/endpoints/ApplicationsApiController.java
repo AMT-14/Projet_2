@@ -1,16 +1,18 @@
 package ch.heig.gamification.api.endpoints;
 
+
 import ch.heig.gamification.api.model.Application;
 import ch.heig.gamification.entities.ApplicationEntity;
 import ch.heig.gamification.api.ApplicationsApi;
 import ch.heig.gamification.repositories.ApplicationRepository;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
-import java.util.UUID;
+
+
+
 import javax.validation.Valid;
 
 @Controller
@@ -27,9 +29,9 @@ public class ApplicationsApiController implements ApplicationsApi {
 //        URI location = ServletUriComponentsBuilder
 //                .fromCurrentRequest().path("/{id}")
 //                .buildAndExpand(newApplicationEntity.getId()).toUri();
-
         return ResponseEntity.ok(newApplicationEntity.getApiKey().toString());
     }
+
     private ApplicationEntity toApplicationEntity(Application application){
         ApplicationEntity entity = new ApplicationEntity();
         entity.setName(application.getName());

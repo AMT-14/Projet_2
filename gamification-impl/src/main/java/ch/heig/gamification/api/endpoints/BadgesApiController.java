@@ -10,12 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import ch.heig.gamification.api.util.DtoConversion;
 
 import javax.servlet.ServletRequest;
 import javax.validation.Valid;
@@ -37,7 +34,7 @@ public class BadgesApiController implements BadgesApi {
                 (ApplicationEntity)servletRequest.getAttribute("appEntity"), badge.getName());
 
         if((alreadyThere != null) && (alreadyThere.getName().equals(newBadgeEntity.getName()))) {
-            return ResponseEntity.status(HttpStatus.I_AM_A_TEAPOT).build(); // bien choisir le status de retour
+            return ResponseEntity.status(HttpStatus.IM_USED).build(); // bien choisir le status de retour
         } else {
             badgeRepository.save(newBadgeEntity);
 

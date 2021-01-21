@@ -11,10 +11,6 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
-import java.time.Instant;
-import java.time.OffsetDateTime;
-import java.util.ArrayList;
-import java.util.Date;
 import static org.junit.Assert.assertEquals;
 
 public class UserSteps {
@@ -38,9 +34,9 @@ public class UserSteps {
             ApiResponse response = api.getUserWithHttpInfo(main.getEvent().getInGamifiedAppUserId());
             env.setApiResponse(response);
             // now process
-            env.ApiResponseProcessor(env.getApiResponse());
+            env.apiResponseProcessor(env.getApiResponse());
         } catch (ApiException ex){
-            env.ApiExceptionProcessor(ex);
+            env.apiExceptionProcessor(ex);
         }
     }
 
@@ -77,9 +73,9 @@ public class UserSteps {
             ApiResponse response = api.getUsersWithHttpInfo();
             env.setApiResponse(response);
             // now process
-            env.ApiResponseProcessor(env.getApiResponse());
+            env.apiResponseProcessor(env.getApiResponse());
         } catch (ApiException ex){
-            env.ApiExceptionProcessor(ex);
+            env.apiExceptionProcessor(ex);
         }
     }
 }

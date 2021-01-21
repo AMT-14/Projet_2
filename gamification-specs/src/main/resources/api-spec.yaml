@@ -49,7 +49,7 @@ paths:
         '200':
           description: Application registered successfully
           content:
-            'application/json':
+            'text/plain':
               schema:
                 type: string
 

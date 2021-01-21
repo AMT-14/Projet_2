@@ -6,14 +6,10 @@ import ch.heig.gamification.ApiResponse;
 import ch.heig.gamification.api.DefaultApi;
 import ch.heig.gamification.api.dto.Application;
 import ch.heig.gamification.api.spec.helpers.GamificationObjects;
-import io.cucumber.java.en.And;
+import io.cucumber.java.bs.A;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-
-import java.time.LocalDate;
-import java.time.OffsetDateTime;
-import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -30,11 +26,15 @@ public class ApplicationSteps {
         this.main = main;
     }
 
-    @Given("there is an Application server")
-    public void there_is_an_Application_server() throws Throwable {
+    @Given("I have registered and set my application")
+    public void i_have_registered_and_set_my_application() throws Throwable {
         assertNotNull(api);
+        i_have_an_application_payload();
+        i_POST_it_to_the_applications_endpoint();
+
         // todo set the api key in the header by default
-        // api.getApiClient().addDefaultHeader("", );
+        System.out.println(env.getApiKey());
+        api.getApiClient().addDefaultHeader("X-API-KEY", env.getApiKey());
     }
 
 
@@ -49,13 +49,15 @@ public class ApplicationSteps {
     public void i_POST_it_to_the_applications_endpoint() throws Throwable {
         try {
             // System.out.println(api.registerApplicationWithHttpInfo(main.getApplication()));
+            System.out.println("BEFORE REGISTER APP WITH HTTP INFO");
             ApiResponse response = api.registerApplicationWithHttpInfo(main.getApplication());
+            System.out.println("AFTER REGISTER APP WITH HTTP INFO");
             env.setApiResponse(response);
             // now process
-            env.ApiResponseProcessor(env.getApiResponse());
-            GamificationObjects.setApplication((Application) env.getApiResponse().getData());
+            env.apiResponseProcessor(env.getApiResponse());
+            GamificationObjects.setApplication(main.getApplication());
         } catch (ApiException ex){
-            env.ApiExceptionProcessor(ex);
+            env.apiExceptionProcessor(ex);
         }
     }
 

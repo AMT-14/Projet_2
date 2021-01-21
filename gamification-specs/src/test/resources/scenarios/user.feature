@@ -1,7 +1,7 @@
 Feature: User creation and list
 
   Background:
-    Given there is an Application server
+    Given I have registered and set my application
 
   Scenario: creation and get of user with event
     Given I have an event payload and a user

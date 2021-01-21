@@ -4,16 +4,11 @@ import ch.heig.gamification.ApiException;
 import ch.heig.gamification.ApiResponse;
 import ch.heig.gamification.api.DefaultApi;
 import ch.heig.gamification.api.dto.Badge;
-import ch.heig.gamification.api.dto.Event;
 import ch.heig.gamification.api.spec.helpers.Environment;
 import ch.heig.gamification.api.spec.helpers.GamificationObjects;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.When;
-import org.junit.Assert;
-
-import java.time.Instant;
-import java.util.Date;
 
 public class BadgeSteps {
 
@@ -44,9 +39,9 @@ public class BadgeSteps {
             ApiResponse response = api.createBadgeWithHttpInfo(main.getBadge());
             env.setApiResponse(response);
             // now process
-            env.ApiResponseProcessor(env.getApiResponse());
+            env.apiResponseProcessor(env.getApiResponse());
         } catch (ApiException ex){
-            env.ApiExceptionProcessor(ex);
+            env.apiExceptionProcessor(ex);
         }
     }
 

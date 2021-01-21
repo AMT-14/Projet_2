@@ -7,12 +7,7 @@ import ch.heig.gamification.api.dto.Event;
 import ch.heig.gamification.api.spec.helpers.Environment;
 import ch.heig.gamification.api.spec.helpers.GamificationObjects;
 import io.cucumber.java.en.Given;
-import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-
-import java.time.Instant;
-import java.time.OffsetDateTime;
-import java.util.Date;
 
 public class EventSteps {
 
@@ -47,9 +42,9 @@ public class EventSteps {
             ApiResponse response = api.registerEventWithHttpInfo(main.getEvent());
             env.setApiResponse(response);
             // now process
-            env.ApiResponseProcessor(env.getApiResponse());
+            env.apiResponseProcessor(env.getApiResponse());
         } catch (ApiException ex){
-            env.ApiExceptionProcessor(ex);
+            env.apiExceptionProcessor(ex);
         }
     }
 

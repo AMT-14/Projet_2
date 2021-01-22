@@ -12,7 +12,7 @@ Feature: User creation and list
 
   Scenario: try to get a wrong user
     Given I have a wrong user
-    When I send a GET to the /users/{inGamifiedAppUserId} endpoint
+    When I search the false user with a GET to the /users/{inGamifiedAppUserId} endpoint
     Then I receive a 404 status code
 
   Scenario: try to post twice same user

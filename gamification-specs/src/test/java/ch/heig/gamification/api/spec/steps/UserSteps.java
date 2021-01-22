@@ -31,7 +31,21 @@ public class UserSteps {
     @When("^I send a GET to the /users/\\{inGamifiedAppUserId} endpoint$")
     public void i_send_a_GET_to_the_UsersInGamifiedAppUserId_endpoint() {
         try {
-            ApiResponse response = api.getUserWithHttpInfo(main.getEvent().getInGamifiedAppUserId());
+            Event event = main.getEvent();
+            ApiResponse response = api.getUserWithHttpInfo(event.getInGamifiedAppUserId());
+            env.setApiResponse(response);
+            // now process
+            env.apiResponseProcessor(env.getApiResponse());
+        } catch (ApiException ex){
+            env.apiExceptionProcessor(ex);
+        }
+    }
+
+    @When("^I search the false user with a GET to the /users/\\{inGamifiedAppUserId} endpoint$")
+    public void i_search_the_false_user_with_a_GET_to_the_UsersInGamifiedAppUserId_endpoint() {
+        try {
+            User user = main.getUser();
+            ApiResponse response = api.getUserWithHttpInfo(user.getInGamifiedAppUserId());
             env.setApiResponse(response);
             // now process
             env.apiResponseProcessor(env.getApiResponse());
@@ -56,7 +70,8 @@ public class UserSteps {
 
     @Then("^I receive the correct user payload with id match$")
     public void i_receive_the_correct_user_payload_with_id_match() {
-        assertEquals(main.getUser(), "UserID");
+
+        assertEquals(main.getUser().getInGamifiedAppUserId(), "UserID");
     }
 
     @Given("^I have a wrong user$")

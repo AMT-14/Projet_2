@@ -31,9 +31,7 @@ public class ApplicationSteps {
         assertNotNull(api);
         i_have_an_application_payload();
         i_POST_it_to_the_applications_endpoint();
-
-        // todo set the api key in the header by default
-        System.out.println(env.getApiKey());
+        // set the API KEY
         api.getApiClient().addDefaultHeader("X-API-KEY", env.getApiKey());
     }
 
@@ -48,10 +46,8 @@ public class ApplicationSteps {
     @When("^I POST it to the /applications endpoint$")
     public void i_POST_it_to_the_applications_endpoint() throws Throwable {
         try {
-            // System.out.println(api.registerApplicationWithHttpInfo(main.getApplication()));
-            System.out.println("BEFORE REGISTER APP WITH HTTP INFO");
             ApiResponse response = api.registerApplicationWithHttpInfo(main.getApplication());
-            System.out.println("AFTER REGISTER APP WITH HTTP INFO");
+
             env.setApiResponse(response);
             // now process
             env.apiResponseProcessor(env.getApiResponse());

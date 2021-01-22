@@ -20,7 +20,7 @@ public class GamificationObjects {
 
     @Getter
     @Setter
-    ScoreScale scorescale;
+    ScoreScale scoreScale;
 
     @Getter
     @Setter

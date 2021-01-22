@@ -2,8 +2,8 @@ package ch.heig.gamification.api.endpoints;
 
 import ch.heig.gamification.api.ScoreScalesApi;
 import ch.heig.gamification.api.model.ScoreScale;
+import ch.heig.gamification.api.util.DtoConversion;
 import ch.heig.gamification.entities.ApplicationEntity;
-import ch.heig.gamification.entities.BadgeEntity;
 import ch.heig.gamification.entities.ScoreScaleEntity;
 import ch.heig.gamification.repositories.ScoreScaleRepository;
 import io.swagger.annotations.ApiParam;
@@ -51,7 +51,7 @@ public class ScoreScalesApiController implements ScoreScalesApi {
 
     public ResponseEntity<ScoreScale> getScoreScale(@ApiParam(name = "", required=true) @PathVariable("id") Integer id) {
         ScoreScaleEntity existingScoreScaleEntity = scoreScaleRepository.findById(Long.valueOf(id)).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-        return ResponseEntity.ok(toScoreScale(existingScoreScaleEntity));
+        return ResponseEntity.ok(DtoConversion.toScoreScale(existingScoreScaleEntity));
     }
 
     private ScoreScaleEntity toScoreScaleEntity(ScoreScale scoreScale) {
@@ -61,9 +61,4 @@ public class ScoreScalesApiController implements ScoreScalesApi {
         return entity;
     }
 
-    private ScoreScale toScoreScale(ScoreScaleEntity entity) {
-        ScoreScale scoreScale = new ScoreScale();
-        scoreScale.setName(entity.getName());
-        return scoreScale;
-    }
 }

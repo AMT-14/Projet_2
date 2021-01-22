@@ -25,7 +25,7 @@ Badges to register badges
 ScoreScale to register ScoreScales
 Rules to register the Rules
 Event for the API to send the Events to be processed
-User to retrieve gamified informations about the Users
+User to retrieve gamified informations about the Users.
 
 The application does not provide more information (such as advanced statistics).
 
@@ -34,5 +34,38 @@ Deleting objects such as badge would force us to go through multiples tables to 
 There are some objects that could be deleted without problem (rules for example) but this has not been done.
 
 No Endpoint uses pagination so far, for one main reason is that except for the User Endpoint, no endpoint returns a (potentially) long list of objects.
+
+
+
+### Cucumber Tests
+
+We built some test to check our endpoints and their CRUD methods
+
+We have Scenarios for Application registration, badges, users, scorescales, events.
+
+In each we test multiple things, like
+
+* Badges:
+  * creation and POST of a badge
+  * if we can correctly GETa badge with its name
+  * if we can't register twice the same badge for a same application
+* Users:
+  * creation of a User
+  * check if we can GET it from an event where he is linked with the /users/{inGamifiedAppId} endpoint
+  * try to GET an inexistant user
+  * GET the list of all users,...
+
+#### How to run the tests:
+
+* Launch the database: `docker-compose up database`
+* Lauch the API: (in `gamification-impl`) do `mvn spring-boot:run`
+* Launch the tests: (in `gamification-specs`) do  `mvn clean test`)
+
+### Things missing
+
+* Some advanced request, for exemple to get a ranking of all user by their points, or the percentage of users having a certain badge
+* Some other CRUD methods for our endpoints (and test with it), like for modify an entry, or to delete.
+
+
 
 

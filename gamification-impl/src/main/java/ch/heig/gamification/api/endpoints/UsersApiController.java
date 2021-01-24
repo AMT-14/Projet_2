@@ -51,7 +51,7 @@ public class UsersApiController implements UsersApi {
 
 
         if(userEntity != null){
-           return ResponseEntity.ok(getStat(userEntity, applicationEntity)); //ResponseEntity.ok(toUser(userEntity));
+           return ResponseEntity.ok(getStat(userEntity, applicationEntity));
        } else {
           throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }

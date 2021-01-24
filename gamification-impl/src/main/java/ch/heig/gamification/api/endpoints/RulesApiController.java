@@ -48,15 +48,12 @@ public class RulesApiController implements RulesApi{
 
         ApplicationEntity applicationEntity = (ApplicationEntity) req.getAttribute("appEntity");
 
-        // TODO: check here if rule is wrong (check its attributes)
-        // in this case return ResponseEntity.status(HttpStatus.BAD_REQUEST).build(); // or NOT_found
-
         RuleEntity newRuleEntity = toRuleEntity(rule);
         RuleEntity alreadyThere = ruleRepository.findByApplicationEntityAndName(applicationEntity, rule.getName());
 
         if((alreadyThere != null) || (newRuleEntity.getScoreScaleEntity() == null && newRuleEntity.getBadgeEntity() == null))
             {
-            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).build(); // bien choisir le status de retour
+            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).build();
         } else {
 
 

@@ -37,7 +37,7 @@ public class ScoreScalesApiController implements ScoreScalesApi {
                 (ApplicationEntity)servletRequest.getAttribute("appEntity"), scoreScale.getName());
 
         if(alreadyThere != null && alreadyThere.getName().equals(newScoreScaleEntity.getName())){
-            return ResponseEntity.status(HttpStatus.I_AM_A_TEAPOT).build(); // bien choisir le status de retour
+            return ResponseEntity.status(HttpStatus.I_AM_A_TEAPOT).build();
         } else {
             scoreScaleRepository.save(newScoreScaleEntity);
 

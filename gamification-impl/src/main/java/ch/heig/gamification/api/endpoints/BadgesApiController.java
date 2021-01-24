@@ -34,7 +34,7 @@ public class BadgesApiController implements BadgesApi {
                 (ApplicationEntity)servletRequest.getAttribute("appEntity"), badge.getName());
 
         if((alreadyThere != null) && (alreadyThere.getName().equals(newBadgeEntity.getName()))) {
-            return ResponseEntity.status(HttpStatus.IM_USED).build(); // bien choisir le status de retour
+            return ResponseEntity.status(HttpStatus.IM_USED).build();
         } else {
             badgeRepository.save(newBadgeEntity);
 

@@ -16,7 +16,6 @@ public class ApplicationEntity implements Serializable {
     @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
     @org.hibernate.annotations.Type(type="uuid-char")
-    //@Column(columnDefinition = "VARCHAR(16)", length = 16)
     private UUID apiKey;
 
     private String name;

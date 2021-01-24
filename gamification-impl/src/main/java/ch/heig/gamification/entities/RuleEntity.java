@@ -18,7 +18,6 @@ public class RuleEntity implements Serializable {
     private String eventName;
     private int scoreDelta;
 
-    //many to one to badge entity
     @OneToOne
     private BadgeEntity badgeEntity;
 

@@ -24,11 +24,6 @@ public class ApplicationsApiController implements ApplicationsApi {
     public ResponseEntity<String> registerApplication(@ApiParam(value = "", required = true) @Valid @RequestBody Application application) {
         ApplicationEntity newApplicationEntity = toApplicationEntity(application);
         applicationRepository.save(newApplicationEntity);
-//        Long id = newApplicationEntity.getId();
-
-//        URI location = ServletUriComponentsBuilder
-//                .fromCurrentRequest().path("/{id}")
-//                .buildAndExpand(newApplicationEntity.getId()).toUri();
         return ResponseEntity.ok(newApplicationEntity.getApiKey().toString());
     }
 

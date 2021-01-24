@@ -48,12 +48,6 @@ public class SwaggerDocumentationConfig {
     }
 
     private SecurityScheme securityScheme() {
-        /*
-        return new HttpAuthenticationBuilder()
-          .name("BearerAuthorization")
-          .scheme("bearer")
-          .build();
-         */
         return new ApiKey("X-API-KEY", "api_key", "header");
     }
 
@@ -66,7 +60,6 @@ public class SwaggerDocumentationConfig {
     private List<SecurityReference> securityReferences() {
         return singletonList(
           new SecurityReference("X-API-KEY", new AuthorizationScope[] {}));
-          // new SecurityReference("BearerAuthorization", new AuthorizationScope[] {}));
     }
 
     @Bean
